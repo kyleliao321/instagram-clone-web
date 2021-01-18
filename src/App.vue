@@ -8,7 +8,7 @@
     </v-app-bar>
 
     <v-main>
-      <ig-icons :icon="Clear" style="width: 60px; height: 60px;" />
+      <ig-avatar :imageSrc="imageSrc" :size="size" />
     </v-main>
   </v-app>
 </template>
@@ -18,8 +18,12 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class App extends Vue {
-  get Clear (): string {
-    return 'Clear'
+  get imageSrc (): string {
+    return 'https://cdn.vuetifyjs.com/images/john.jpg'
+  }
+
+  get size (): number {
+    return 62
   }
 }
 </script>
