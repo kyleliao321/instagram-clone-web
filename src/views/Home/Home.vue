@@ -6,7 +6,8 @@
               :browsingUserProfile="browsingUserProfile" />
           <ig-posts
               style="margin-top: 20px; width: 600px;"
-              :posts="posts" />
+              :posts="posts"
+              @onLikeButtonClicked="onLikeButtonClicked" />
         </div>
     </div>
 </template>
@@ -69,6 +70,10 @@ export default class Home extends Vue {
         getPostUseId: () => 'mockId'
       }
     ]
+  }
+
+  private onLikeButtonClicked (postId: string) {
+    console.log(`like ${postId}`)
   }
 }
 </script>

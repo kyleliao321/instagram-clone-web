@@ -20,7 +20,7 @@ export default class Icons extends Vue {
       case 'home':
       case 'like':
       case 'homeclicked':
-      case 'likecliked':
+      case 'likeclicked':
         return '0 0 24 24'
       default:
         return '0 0 20 20'

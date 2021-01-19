@@ -14,7 +14,7 @@
     </v-app-bar>
     <v-main style="padding-top: 75px;">
       <!-- <ig-feeds /> -->
-      <ig-home />
+      <ig-home/>
     </v-main>
   </v-app>
 </div>

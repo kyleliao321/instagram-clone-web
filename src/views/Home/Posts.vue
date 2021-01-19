@@ -14,7 +14,7 @@
                 </div>
             </template>
 
-            <ig-post-defailt :post="post"/>
+            <ig-post-detail :post="post" @onLikedButtonClicked="onLikeButtonClicked"/>
         </v-dialog>
     </div>
 </template>
@@ -24,11 +24,15 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { PostDomainModel } from '../../utils/types/DomainModels'
 import PostDefailt from './PostDetail.vue'
 
-Vue.component('ig-post-defailt', PostDefailt)
+Vue.component('ig-post-detail', PostDefailt)
 
 @Component
 export default class Posts extends Vue {
     @Prop() private posts !: PostDomainModel;
+
+    private onLikeButtonClicked (postId: string) {
+      this.$emit('onLikeButtonClicked', postId)
+    }
 }
 </script>
 

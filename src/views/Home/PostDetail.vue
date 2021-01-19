@@ -12,7 +12,11 @@
             </div>
             <div class="post-description">{{ post.getPostDescription() }}</div>
             <div class="post-action-container">
-                <ig-icons icon="LikeClicked" style="width: 35px; height: 35px;" />
+                <ig-icons
+                    icon="LikeClicked"
+                    style="width: 35px; height: 35px; cursor: pointer;"
+                    @click.native="onLikeButtonClicked"
+                />
                 <h5 style="align-self: center; margin-left: 10px;">1,000 Likes</h5>
             </div>
         </div>
@@ -26,6 +30,10 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component
 export default class PostDetail extends Vue {
   @Prop() private post !: PostDomainModel;
+
+  private onLikeButtonClicked () {
+    this.$emit('onLikedButtonClicked', this.post.getPostId())
+  }
 }
 </script>
 
