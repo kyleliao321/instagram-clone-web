@@ -1,9 +1,13 @@
 import Clear from './Clear.vue'
 import Home from './Home.vue'
-import LikeFill from './LikeFill.vue'
+import Like from './Like.vue'
+import HomeClicked from './HomeClicked.vue'
+import LikeClicked from './LikeClicked.vue'
 
 export default {
   Clear,
   Home,
-  LikeFill
+  Like,
+  HomeClicked,
+  LikeClicked
 }

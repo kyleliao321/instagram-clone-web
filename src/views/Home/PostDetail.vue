@@ -12,7 +12,7 @@
             </div>
             <div class="post-description">{{ post.getPostDescription() }}</div>
             <div class="post-action-container">
-                <ig-icons icon="LikeFill" style="width: 35px; height: 35px;" />
+                <ig-icons icon="LikeClicked" style="width: 35px; height: 35px;" />
                 <h5 style="align-self: center; margin-left: 10px;">1,000 Likes</h5>
             </div>
         </div>

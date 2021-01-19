@@ -8,7 +8,7 @@
       <v-toolbar-title>Demo Application</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
-        <ig-icons icon="Home" style="width: 40px; height: 40px;"/>
+        <ig-icons icon="HomeClicked" style="width: 40px; height: 40px;"/>
       </v-btn>
       <ig-avatar :imageSrc="loginUserImageSrc" size="52" />
     </v-app-bar>

@@ -18,7 +18,9 @@ export default class Icons extends Vue {
     switch (this.$attrs.icon.toLowerCase()) {
       case 'clear':
       case 'home':
-      case 'likefill':
+      case 'like':
+      case 'homeclicked':
+      case 'likecliked':
         return '0 0 24 24'
       default:
         return '0 0 20 20'
