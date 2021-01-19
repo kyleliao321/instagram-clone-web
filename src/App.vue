@@ -2,6 +2,7 @@
 <div id="app">
   <v-app id="inspire">
     <v-app-bar
+      v-if="isLogin"
       fixed
       color="white"
     >
@@ -30,9 +31,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 
 @Component
 export default class App extends Vue {
+  @Getter('isLogin') private isLogin !: boolean;
+
   get loginUserImageSrc (): string {
     return 'https://cdn.vuetifyjs.com/images/john.jpg'
   }
