@@ -47,6 +47,9 @@ export default class App extends Vue {
 
   private onNavigate (dest: string) {
     console.log(`navigate ${dest}`)
+    if (this.currentRouteName !== dest) {
+      this.$router.push({ name: dest })
+    }
   }
 
   private navigateToFeeds () {
