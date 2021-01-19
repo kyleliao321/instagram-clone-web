@@ -17,3 +17,12 @@ export type UserProfileDomainModel = {
     getFollowerNum: () => number;
     getFollowingNum: () => number;
 }
+
+export type PostDomainModel = {
+    getPostId: () => string;
+    getPostImageSrc: () => string;
+    getPostLocation: () => string;
+    getPostDate: () => string;
+    getPostDescription: () => string;
+    getPostUseId: () => string;
+}

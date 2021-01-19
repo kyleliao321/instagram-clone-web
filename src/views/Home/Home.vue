@@ -1,17 +1,24 @@
 <template>
     <div class="home-wrapper">
-        <ig-user-profile
-            class="user-profile-container"
-            :browsingUserProfile="browsingUserProfile" />
+        <div class="home-colume">
+          <ig-user-profile
+              class="user-profile-container"
+              :browsingUserProfile="browsingUserProfile" />
+          <ig-posts
+              style="margin-top: 20px; width: 600px;"
+              :posts="posts" />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import UserProfile from './UserProfile.vue'
-import { UserProfileDomainModel } from '../../utils/types/DomainModels'
+import Posts from './Posts.vue'
+import { PostDomainModel, UserProfileDomainModel } from '../../utils/types/DomainModels'
 
 Vue.component('ig-user-profile', UserProfile)
+Vue.component('ig-posts', Posts)
 
 @Component
 export default class Home extends Vue {
@@ -26,6 +33,43 @@ export default class Home extends Vue {
       getFollowerNum: () => 10
     })
   }
+
+  get posts (): PostDomainModel[] {
+    return [
+      {
+        getPostId: () => 'mockPost1',
+        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
+        getPostLocation: () => 'location',
+        getPostDate: () => 'date',
+        getPostDescription: () => 'des',
+        getPostUseId: () => 'mockId'
+      },
+      {
+        getPostId: () => 'mockPost2',
+        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
+        getPostLocation: () => 'location',
+        getPostDate: () => 'date',
+        getPostDescription: () => 'des',
+        getPostUseId: () => 'mockId'
+      },
+      {
+        getPostId: () => 'mockPost3',
+        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
+        getPostLocation: () => 'location',
+        getPostDate: () => 'date',
+        getPostDescription: () => 'des',
+        getPostUseId: () => 'mockId'
+      },
+      {
+        getPostId: () => 'mockPost4',
+        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
+        getPostLocation: () => 'location',
+        getPostDate: () => 'date',
+        getPostDescription: () => 'des',
+        getPostUseId: () => 'mockId'
+      }
+    ]
+  }
 }
 </script>
 
@@ -34,6 +78,10 @@ export default class Home extends Vue {
         display: flex;
         flex-direction: row;
         justify-content: center;
+    }
+    .home-colume {
+      display: flex;
+      flex-direction: column;
     }
     .user-profile-container {
         width: 600px;
