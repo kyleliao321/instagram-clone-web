@@ -39,33 +39,33 @@ export default class Home extends Vue {
       {
         getPostId: () => 'mockPost1',
         getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'location',
-        getPostDate: () => 'date',
-        getPostDescription: () => 'des',
+        getPostLocation: () => 'Taiwan',
+        getPostDate: () => '2020/03/21 21:31',
+        getPostDescription: () => 'This post gonna have alot of message here.',
         getPostUseId: () => 'mockId'
       },
       {
         getPostId: () => 'mockPost2',
         getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'location',
-        getPostDate: () => 'date',
-        getPostDescription: () => 'des',
+        getPostLocation: () => 'Chicago',
+        getPostDate: () => '2019/03/21 21:31',
+        getPostDescription: () => 'This post gonna have alot of message here.',
         getPostUseId: () => 'mockId'
       },
       {
         getPostId: () => 'mockPost3',
         getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'location',
-        getPostDate: () => 'date',
-        getPostDescription: () => 'des',
+        getPostLocation: () => 'Japan',
+        getPostDate: () => '2019/03/21 21:31',
+        getPostDescription: () => 'This post gonna have alot of message here.',
         getPostUseId: () => 'mockId'
       },
       {
         getPostId: () => 'mockPost4',
         getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'location',
-        getPostDate: () => 'date',
-        getPostDescription: () => 'des',
+        getPostLocation: () => 'USA',
+        getPostDate: () => '2019/03/21 21:31',
+        getPostDescription: () => 'This post gonna have alot of message here.',
         getPostUseId: () => 'mockId'
       }
     ]

@@ -1,21 +1,30 @@
 <template>
     <div class="posts-container">
-        <div
+        <v-dialog
             v-for="(post) in posts"
             :key="post.getPostId()"
-            style="width: 200px; height: 200px; padding: 2px;"
+            width="860px"
         >
-            <img
-                style="width:100%;"
-                src="../../assets/DEMO_001.jpg"
-            />
-        </div>
+            <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on" style="width: 200px; height: 200px; padding: 2px;">
+                    <img
+                        style="width:100%;"
+                        src="../../assets/DEMO_001.jpg"
+                    />
+                </div>
+            </template>
+
+            <ig-post-defailt :post="post"/>
+        </v-dialog>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { PostDomainModel } from '../../utils/types/DomainModels'
+import PostDefailt from './PostDetail.vue'
+
+Vue.component('ig-post-defailt', PostDefailt)
 
 @Component
 export default class Posts extends Vue {
