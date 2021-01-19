@@ -14,6 +14,12 @@
                 style="width: 100%;"
                 src="../../assets/DEMO_001.jpg" />
         </div>
+        <div class="feed-post-action-container">
+            <v-btn icon>
+                <ig-icons :icon="likeIcon" style="width: 35px; height: 35px; " />
+            </v-btn>
+            <h5 style="align-self: center; margin-left: 10px;">{{likeNum}} likes</h5>
+        </div>
         <div class="feed-post-description">
             <p>{{ description }}</p>
         </div>
@@ -21,11 +27,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { Feed } from '../../utils/types/DomainModels'
+import { FeedDomainModel } from '../../utils/types/DomainModels'
 
 @Component
 export default class FeedCard extends Vue {
-    @Prop() private feed !: Feed;
+    @Prop() private feed !: FeedDomainModel;
 
     get userImageSrc (): string|null {
       return this.feed.getUserImageSrc()
@@ -41,6 +47,14 @@ export default class FeedCard extends Vue {
 
     get description (): string {
       return this.feed.getPostDescription()
+    }
+
+    get likeIcon (): string {
+      return this.feed.getUserLikedPost() ? 'LikeClicked' : 'Like'
+    }
+
+    get likeNum (): string {
+      return this.feed.getPostLikedNum().toString()
     }
 }
 
@@ -74,5 +88,10 @@ export default class FeedCard extends Vue {
     }
     .feed-post-description {
         padding: 8px;
+    }
+    .feed-post-action-container {
+        display: flex;
+        flex-direction: row;
+        padding: 0px 10px 0px 10px;
     }
 </style>

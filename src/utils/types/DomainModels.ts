@@ -1,4 +1,4 @@
-export type Feed = {
+export type FeedDomainModel = {
     getUserId: () => string;
     getUserImageSrc: () => string | null;
     getUserName: () => string;
@@ -6,6 +6,8 @@ export type Feed = {
     getPostLocation: () => string;
     getPostImageSrc: () => string;
     getPostDescription: () => string;
+    getPostLikedNum: () => number;
+    getUserLikedPost: () => boolean;
 }
 
 export type UserProfileDomainModel = {
@@ -25,4 +27,6 @@ export type PostDomainModel = {
     getPostDate: () => string;
     getPostDescription: () => string;
     getPostUseId: () => string;
+    getPostLikedNum: () => number;
+    getUserLikedPost: () => boolean;
 }

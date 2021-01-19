@@ -43,7 +43,9 @@ export default class Home extends Vue {
         getPostLocation: () => 'Taiwan',
         getPostDate: () => '2020/03/21 21:31',
         getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId'
+        getPostUseId: () => 'mockId',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => false
       },
       {
         getPostId: () => 'mockPost2',
@@ -51,7 +53,9 @@ export default class Home extends Vue {
         getPostLocation: () => 'Chicago',
         getPostDate: () => '2019/03/21 21:31',
         getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId'
+        getPostUseId: () => 'mockId',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => true
       },
       {
         getPostId: () => 'mockPost3',
@@ -59,7 +63,9 @@ export default class Home extends Vue {
         getPostLocation: () => 'Japan',
         getPostDate: () => '2019/03/21 21:31',
         getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId'
+        getPostUseId: () => 'mockId',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => false
       },
       {
         getPostId: () => 'mockPost4',
@@ -67,7 +73,9 @@ export default class Home extends Vue {
         getPostLocation: () => 'USA',
         getPostDate: () => '2019/03/21 21:31',
         getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId'
+        getPostUseId: () => 'mockId',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => true
       }
     ]
   }

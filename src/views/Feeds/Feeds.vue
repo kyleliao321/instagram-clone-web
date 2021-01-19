@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Feed } from '../../utils/types/DomainModels'
+import { FeedDomainModel } from '../../utils/types/DomainModels'
 import FeedCard from './FeedCard.vue'
 
 Vue.component('ig-feed-card', FeedCard)
 
 @Component
 export default class Feeds extends Vue {
-    private feeds: Feed[] = [
+    private feeds: FeedDomainModel[] = [
       {
         getUserId: () => 'mockUserId1',
         getUserName: () => 'Jerry',
@@ -27,7 +27,9 @@ export default class Feeds extends Vue {
         getPostId: () => 'mockPostId1',
         getPostLocation: () => 'Taiwan',
         getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description'
+        getPostDescription: () => 'description',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => false
       },
       {
         getUserId: () => 'mockUserId2',
@@ -36,7 +38,9 @@ export default class Feeds extends Vue {
         getPostId: () => 'mockPostId2',
         getPostLocation: () => 'Taiwan',
         getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description'
+        getPostDescription: () => 'description',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => true
       },
       {
         getUserId: () => 'mockUserId3',
@@ -45,7 +49,9 @@ export default class Feeds extends Vue {
         getPostId: () => 'mockPostId3',
         getPostLocation: () => 'Taiwan',
         getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description'
+        getPostDescription: () => 'description',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => false
       },
       {
         getUserId: () => 'mockUserId4',
@@ -54,7 +60,9 @@ export default class Feeds extends Vue {
         getPostId: () => 'mockPostId4',
         getPostLocation: () => 'Taiwan',
         getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description'
+        getPostDescription: () => 'description',
+        getPostLikedNum: () => 100,
+        getUserLikedPost: () => true
       }
     ]
 }
