@@ -17,6 +17,7 @@ export default class Icons extends Vue {
   get viewBox (): string {
     switch (this.$attrs.icon.toLowerCase()) {
       case 'clear':
+      case 'home':
         return '0 0 24 24'
       default:
         return '0 0 20 20'
