@@ -7,3 +7,13 @@ export type Feed = {
     getPostImageSrc: () => string;
     getPostDescription: () => string;
 }
+
+export type UserProfileDomainModel = {
+    getUserId: () => string;
+    getUserImageSrc: () => string | null;
+    getUserName: () => string;
+    getAlias: () => string;
+    getPostNum: () => number;
+    getFollowerNum: () => number;
+    getFollowingNum: () => number;
+}

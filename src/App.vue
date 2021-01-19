@@ -13,7 +13,8 @@
       <ig-avatar :imageSrc="loginUserImageSrc" size="52" />
     </v-app-bar>
     <v-main style="padding-top: 75px;">
-      <ig-feeds />
+      <!-- <ig-feeds /> -->
+      <ig-home />
     </v-main>
   </v-app>
 </div>
@@ -22,8 +23,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Feed from './views/Feeds/Feeds.vue'
+import Home from './views/Home/Home.vue'
 
 Vue.component('ig-feeds', Feed)
+Vue.component('ig-home', Home)
 
 @Component
 export default class App extends Vue {
