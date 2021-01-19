@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Feeds from '../views/Feeds/Feeds.vue'
 import Home from '../views/Home/Home.vue'
+import Register from '../views/Register/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes: Array<RouteConfig> = [
     path: '/feeds',
     name: 'Feeds',
     component: Feeds
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   }
 ]
 

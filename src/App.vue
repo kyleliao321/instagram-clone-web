@@ -20,7 +20,9 @@
         size="52" />
     </v-app-bar>
     <v-main style="padding-top: 75px;">
-      <router-view></router-view>
+      <router-view
+        @onNavigate="onNavigate"
+      ></router-view>
     </v-main>
   </v-app>
 </div>
@@ -41,6 +43,10 @@ export default class App extends Vue {
 
   get homeIcon (): string {
     return this.currentRouteName === 'Feeds' ? 'HomeClicked' : 'Home'
+  }
+
+  private onNavigate (dest: string) {
+    console.log(`navigate ${dest}`)
   }
 
   private navigateToFeeds () {
