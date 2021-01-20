@@ -17,10 +17,8 @@ export const actions: ActionTree<State, State> & Actions = {
   },
 
   async [ActionTypes.REGISTER] (context, param) {
-    setTimeout(() => {
-      console.log(context, param)
-    }, 1000)
-    return true
+    const result = await context.state.http.register({ ...param })
+    return result
   },
 
   async [ActionTypes.FETCH_FEEDS] (context) {
