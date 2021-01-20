@@ -8,7 +8,7 @@ export function transformUserProfileResponse (data: GetUserProfileResponse): Use
     getUserName: () => user.userName,
     getAlias: () => user.alias,
     getDescription: () => user.description,
-    getUserImageSrc: () => user.imageSrc ?? null,
+    getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
     getPostNum: () => user.postNum,
     getFollowerNum: () => user.followerNum,
     getFollowingNum: () => user.followingNum
@@ -23,7 +23,7 @@ export function transformSearchUserResponse (data: SearchUserResponse): UserProf
       getUserName: () => user.userName,
       getAlias: () => user.alias,
       getDescription: () => user.description,
-      getUserImageSrc: () => user.imageSrc ?? null,
+      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
       getPostNum: () => user.postNum,
       getFollowerNum: () => user.followerNum,
       getFollowingNum: () => user.followingNum
@@ -48,7 +48,7 @@ export function transformFeedResponse (feed: FeedObject, likedUserIds: string[],
   return Object.freeze({
     getUserId: () => feed.userId,
     getUserName: () => feed.userName,
-    getUserImageSrc: () => feed.userImage ?? null,
+    getUserImageSrc: () => feed.userImage === null ? null : `http://localhost:8080/static/${feed.userImage}`,
     getPostId: () => feed.postId,
     getPostDescription: () => feed.description,
     getPostLocation: () => feed.location,
