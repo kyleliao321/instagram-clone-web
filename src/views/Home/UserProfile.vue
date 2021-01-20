@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="description-container">
-            <p>A lot of message goint to be here</p>
+            <p>{{ userDescription }}</p>
         </div>
     </div>
 </template>
@@ -29,27 +29,31 @@ export default class UserProifle extends Vue {
   @Prop() private browsingUserProfile !: UserProfileDomainModel;
 
   get userImageSrc (): string|null {
-    return this.browsingUserProfile.userImageSrc
+    return this.browsingUserProfile.getUserImageSrc()
   }
 
   get userName (): string {
-    return this.browsingUserProfile.userName
+    return this.browsingUserProfile.getUserName()
   }
 
   get userAlias (): string {
-    return this.browsingUserProfile.alias
+    return this.browsingUserProfile.getAlias()
+  }
+
+  get userDescription (): string {
+    return this.browsingUserProfile.getDescription()
   }
 
   get postsNum (): string {
-    return `${this.browsingUserProfile.postNum}`
+    return `${this.browsingUserProfile.getPostNum()}`
   }
 
   get followingNum (): string {
-    return `${this.browsingUserProfile.followingNum}`
+    return `${this.browsingUserProfile.getFollowingNum()}`
   }
 
   get followerNum (): string {
-    return `${this.browsingUserProfile.followerNum}`
+    return `${this.browsingUserProfile.getFollowerNum()}`
   }
 }
 </script>

@@ -4,13 +4,14 @@ import { FeedObject, GetUserProfileResponse, PostObject } from './types'
 export function transformUserProfileResponse (data: GetUserProfileResponse): UserProfileDomainModel {
   const user = data.user
   return Object.freeze({
-    userId: user.id,
-    userName: user.userName,
-    alias: user.alias,
-    userImageSrc: user.imageSrc ?? null,
-    postNum: user.postNum,
-    followerNum: user.followerNum,
-    followingNum: user.followingNum
+    getUserId: () => user.id,
+    getUserName: () => user.userName,
+    getAlias: () => user.alias,
+    getDescription: () => user.description,
+    getUserImageSrc: () => user.imageSrc ?? null,
+    getPostNum: () => user.postNum,
+    getFollowerNum: () => user.followerNum,
+    getFollowingNum: () => user.followingNum
   })
 }
 

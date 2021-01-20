@@ -11,13 +11,14 @@ export type FeedDomainModel = {
 }
 
 export type UserProfileDomainModel = {
-    userId: string;
-    userImageSrc: string|null;
-    userName: string;
-    alias: string;
-    postNum: number;
-    followerNum: number;
-    followingNum: number;
+    getUserId: () => string;
+    getUserImageSrc: () => string|null;
+    getUserName: () => string;
+    getAlias: () => string;
+    getDescription: () => string;
+    getPostNum: () => number;
+    getFollowerNum: () => number;
+    getFollowingNum: () => number;
 }
 
 export type PostDomainModel = {

@@ -3,7 +3,7 @@
         <img
             v-if="imageSrc !== null"
             :src="imageSrc" />
-        <v-icon x-large v-else>mdi-account-circle</v-icon>
+        <v-icon x-large v-else :size="size">mdi-account-circle</v-icon>
     </v-avatar>
 </template>
 
