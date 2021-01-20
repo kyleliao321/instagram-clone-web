@@ -8,6 +8,7 @@
           <ig-posts
               style="margin-top: 20px; width: 600px;"
               :posts="posts"
+              :belongUserProfile="browsingUserProfile"
               @onLikeButtonClicked="onLikeButtonClicked" />
         </div>
     </div>

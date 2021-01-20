@@ -14,20 +14,24 @@
                 </div>
             </template>
 
-            <ig-post-detail :post="post" @onLikedButtonClicked="onLikeButtonClicked"/>
+            <ig-post-detail
+                :belongUserProfile="belongUserProfile"
+                :post="post"
+                @onLikedButtonClicked="onLikeButtonClicked"/>
         </v-dialog>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { PostDomainModel } from '../../utils/types/DomainModels'
+import { PostDomainModel, UserProfileDomainModel } from '../../utils/types/DomainModels'
 import PostDefailt from './PostDetail.vue'
 
 Vue.component('ig-post-detail', PostDefailt)
 
 @Component
 export default class Posts extends Vue {
+    @Prop() private belongUserProfile !: UserProfileDomainModel;
     @Prop() private posts !: PostDomainModel;
 
     private onLikeButtonClicked (postId: string) {

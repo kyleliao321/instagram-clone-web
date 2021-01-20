@@ -7,8 +7,12 @@
         </div>
         <div class="post-detail-metadata-container">
             <div class="post-detail-info">
+                <div style="border-bottom: 1px solid grey; padding-bottom: 5px; display: flex; flex-direction: row; align-items: center; ">
+                    <ig-avatar :imageSrc="belongUserProfile.getUserImageSrc()" />
+                    <div style="margin-left: 5px; font-weight: bold; ">{{belongUserProfile.getUserName()}}</div>
+                </div>
+                <div>{{ parsedDate }}</div>
                 <div>{{ post.getPostLocation() }}</div>
-                <div>{{ post.getPostDate() }}</div>
             </div>
             <div class="post-description">{{ post.getPostDescription() }}</div>
             <div class="post-action-container">
@@ -24,12 +28,14 @@
 </template>
 
 <script lang="ts">
-import { PostDomainModel } from '@/utils/types/DomainModels'
+import { formatDate } from '@/utils/helpers'
+import { PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class PostDetail extends Vue {
   @Prop() private post !: PostDomainModel;
+  @Prop() private belongUserProfile !: UserProfileDomainModel;
 
   get likeIcon (): string {
     return this.post.getUserLikedPost() ? 'LikeClicked' : 'Like'
@@ -37,6 +43,10 @@ export default class PostDetail extends Vue {
 
   get postLikeNum (): string {
     return this.post.getPostLikedNum().toString()
+  }
+
+  get parsedDate (): string {
+    return formatDate(this.post.getPostDate())
   }
 
   private onLikeButtonClicked () {

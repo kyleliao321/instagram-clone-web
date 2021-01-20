@@ -28,7 +28,8 @@
             <h5 style="align-self: center; margin-left: 10px;">{{likeNum}} likes</h5>
         </div>
         <div class="feed-post-description">
-            <p>{{ description }}</p>
+            <div style="font-weight: bold; ">{{ userName }}</div>
+            <p style="overflow: hidden; text-overflow: ellipsis; ">{{ description }}</p>
         </div>
     </article>
 </template>
@@ -102,7 +103,7 @@ export default class FeedCard extends Vue {
         margin-top: 5px;
     }
     .feed-post-description {
-        padding: 8px;
+        padding: 10px 15px 0px 15px;
     }
     .feed-post-action-container {
         display: flex;
