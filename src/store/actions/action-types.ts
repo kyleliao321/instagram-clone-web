@@ -4,7 +4,8 @@ import { Mutations } from '../mutations'
 
 export enum ActionTypes {
     LOGIN = 'LOGIN',
-    REGISTER = 'REGISTER'
+    REGISTER = 'REGISTER',
+    FETCH_FEEDS = 'FETCH_FEEDS'
 }
 
 export type ActionParam = {
@@ -33,5 +34,8 @@ export type Actions = {
     [ActionTypes.REGISTER](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.REGISTER]
+    ): Promise<boolean>;
+    [ActionTypes.FETCH_FEEDS](
+        context: AugmentedActionContext
     ): Promise<boolean>;
 }

@@ -5,5 +5,8 @@ import { State } from '../state'
 export const getters: GetterTree<State, State> & Getters = {
   [GetterTypes.IS_LOGIN] (state) {
     return state.loginUserId !== undefined
+  },
+  [GetterTypes.FEEDS] (state) {
+    return state.feeds
   }
 }

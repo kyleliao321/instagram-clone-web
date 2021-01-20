@@ -11,7 +11,10 @@
 </template>
 
 <script lang="ts">
+import { ActionTypes } from '@/store/actions/action-types'
+import { GetterTypes } from '@/store/getters/getters-types'
 import { Vue, Component } from 'vue-property-decorator'
+import { Action, Getter } from 'vuex-class'
 import { FeedDomainModel } from '../../utils/types/DomainModels'
 import FeedCard from './FeedCard.vue'
 
@@ -19,52 +22,12 @@ Vue.component('ig-feed-card', FeedCard)
 
 @Component
 export default class Feeds extends Vue {
-    private feeds: FeedDomainModel[] = [
-      {
-        getUserId: () => 'mockUserId1',
-        getUserName: () => 'Jerry',
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getPostId: () => 'mockPostId1',
-        getPostLocation: () => 'Taiwan',
-        getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => false
-      },
-      {
-        getUserId: () => 'mockUserId2',
-        getUserName: () => 'Jerry',
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getPostId: () => 'mockPostId2',
-        getPostLocation: () => 'Taiwan',
-        getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => true
-      },
-      {
-        getUserId: () => 'mockUserId3',
-        getUserName: () => 'Jerry',
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getPostId: () => 'mockPostId3',
-        getPostLocation: () => 'Taiwan',
-        getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => false
-      },
-      {
-        getUserId: () => 'mockUserId4',
-        getUserName: () => 'Jerry',
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getPostId: () => 'mockPostId4',
-        getPostLocation: () => 'Taiwan',
-        getPostImageSrc: () => 'mock',
-        getPostDescription: () => 'description',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => true
-      }
-    ]
+    @Action(ActionTypes.FETCH_FEEDS) private fetchFeeds !: () => Promise<boolean>;
+    @Getter(GetterTypes.FEEDS) private feeds !: FeedDomainModel[];
+
+    private created () {
+      this.fetchFeeds()
+    }
 }
 </script>
 
