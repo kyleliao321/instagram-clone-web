@@ -5,7 +5,9 @@ import { Mutations } from '../mutations'
 export enum ActionTypes {
     LOGIN = 'LOGIN',
     REGISTER = 'REGISTER',
-    FETCH_FEEDS = 'FETCH_FEEDS'
+    FETCH_FEEDS = 'FETCH_FEEDS',
+    FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
+    FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS'
 }
 
 export type ActionParam = {
@@ -16,6 +18,12 @@ export type ActionParam = {
     [ActionTypes.REGISTER]: {
         userName: string;
         password: string;
+    };
+    [ActionTypes.FETCH_BROWSING_USER_PROFILE]: {
+        userId: string;
+    };
+    [ActionTypes.FETCH_BROWSING_USER_POSTS]: {
+        userId: string;
     };
 }
 
@@ -31,11 +39,23 @@ export type Actions = {
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.LOGIN]
     ): Promise<void>;
+
     [ActionTypes.REGISTER](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.REGISTER]
     ): Promise<boolean>;
+
     [ActionTypes.FETCH_FEEDS](
         context: AugmentedActionContext
+    ): Promise<boolean>;
+
+    [ActionTypes.FETCH_BROWSING_USER_PROFILE](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.FETCH_BROWSING_USER_PROFILE]
+    ): Promise<boolean>;
+
+    [ActionTypes.FETCH_BROWSING_USER_POSTS](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]
     ): Promise<boolean>;
 }

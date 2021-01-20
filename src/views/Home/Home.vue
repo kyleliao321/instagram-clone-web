@@ -2,6 +2,7 @@
     <div class="home-wrapper">
         <div class="home-colume">
           <ig-user-profile
+              v-if="browsingUserProfile !== undefined"
               class="user-profile-container"
               :browsingUserProfile="browsingUserProfile" />
           <ig-posts
@@ -17,71 +18,27 @@ import { Vue, Component } from 'vue-property-decorator'
 import UserProfile from './UserProfile.vue'
 import Posts from './Posts.vue'
 import { PostDomainModel, UserProfileDomainModel } from '../../utils/types/DomainModels'
+import { Action, Getter } from 'vuex-class'
+import { ActionParam, ActionTypes } from '@/store/actions/action-types'
+import { GetterTypes } from '@/store/getters/getters-types'
 
 Vue.component('ig-user-profile', UserProfile)
 Vue.component('ig-posts', Posts)
 
 @Component
 export default class Home extends Vue {
-  get browsingUserProfile (): UserProfileDomainModel {
-    return Object.freeze({
-      getUserId: () => 'mockId',
-      getUserName: () => 'kyleliao0321',
-      getAlias: () => 'Kyle',
-      getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-      getPostNum: () => 10,
-      getFollowingNum: () => 10,
-      getFollowerNum: () => 10
-    })
-  }
-
-  get posts (): PostDomainModel[] {
-    return [
-      {
-        getPostId: () => 'mockPost1',
-        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'Taiwan',
-        getPostDate: () => '2020/03/21 21:31',
-        getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => false
-      },
-      {
-        getPostId: () => 'mockPost2',
-        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'Chicago',
-        getPostDate: () => '2019/03/21 21:31',
-        getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => true
-      },
-      {
-        getPostId: () => 'mockPost3',
-        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'Japan',
-        getPostDate: () => '2019/03/21 21:31',
-        getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => false
-      },
-      {
-        getPostId: () => 'mockPost4',
-        getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-        getPostLocation: () => 'USA',
-        getPostDate: () => '2019/03/21 21:31',
-        getPostDescription: () => 'This post gonna have alot of message here.',
-        getPostUseId: () => 'mockId',
-        getPostLikedNum: () => 100,
-        getUserLikedPost: () => true
-      }
-    ]
-  }
+  @Action(ActionTypes.FETCH_BROWSING_USER_PROFILE) private fetchBrowsingUserProfile !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_PROFILE]) => Promise<boolean>
+  @Action(ActionTypes.FETCH_BROWSING_USER_POSTS) private fetchBrowsingPosts !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]) => Promise<boolean>
+  @Getter(GetterTypes.BROWSING_USER_PROFILE) private browsingUserProfile !: UserProfileDomainModel|undefined;
+  @Getter(GetterTypes.BROWSING_USER_POSTS) private posts !: PostDomainModel[];
 
   private onLikeButtonClicked (postId: string) {
     console.log(`like ${postId}`)
+  }
+
+  private created () {
+    this.fetchBrowsingUserProfile({ userId: 'mockId' })
+    this.fetchBrowsingPosts({ userId: 'mockId' })
   }
 }
 </script>
