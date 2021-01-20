@@ -2,7 +2,11 @@
     <article class="wrapper">
         <header class="feed-header">
             <div class="image-div">
-                <ig-avatar :imageSrc="userImageSrc" size="52" />
+                <ig-avatar
+                    @click.native="onUserImageClick"
+                    style="cursor: pointer; "
+                    :imageSrc="userImageSrc"
+                    size="52" />
             </div>
             <div class="feed-metadata-div">
                 <h5>{{ userName }}</h5>
@@ -55,6 +59,10 @@ export default class FeedCard extends Vue {
 
     get likeNum (): string {
       return this.feed.getPostLikedNum().toString()
+    }
+
+    private onUserImageClick () {
+      this.$emit('onUserImageClick', this.feed.getUserId())
     }
 }
 
