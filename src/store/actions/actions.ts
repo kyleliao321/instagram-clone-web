@@ -1,3 +1,4 @@
+import { GetFeedsInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -17,62 +18,22 @@ export const actions: ActionTree<State, State> & Actions = {
 
   async [ActionTypes.REGISTER] (context, param) {
     setTimeout(() => {
-      // make an api call
+      console.log(context, param)
     }, 1000)
     return true
   },
 
   async [ActionTypes.FETCH_FEEDS] (context) {
-    setTimeout(() => {
-      const mockFeeds = [
-        {
-          getUserId: () => 'mockUserId1',
-          getUserName: () => 'Jerry',
-          getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-          getPostId: () => 'mockPostId1',
-          getPostLocation: () => 'Taiwan',
-          getPostImageSrc: () => 'mock',
-          getPostDescription: () => 'description',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => false
-        },
-        {
-          getUserId: () => 'mockUserId2',
-          getUserName: () => 'Jerry',
-          getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-          getPostId: () => 'mockPostId2',
-          getPostLocation: () => 'Taiwan',
-          getPostImageSrc: () => 'mock',
-          getPostDescription: () => 'description',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => true
-        },
-        {
-          getUserId: () => 'mockUserId3',
-          getUserName: () => 'Jerry',
-          getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-          getPostId: () => 'mockPostId3',
-          getPostLocation: () => 'Taiwan',
-          getPostImageSrc: () => 'mock',
-          getPostDescription: () => 'description',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => false
-        },
-        {
-          getUserId: () => 'mockUserId4',
-          getUserName: () => 'Jerry',
-          getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-          getPostId: () => 'mockPostId4',
-          getPostLocation: () => 'Taiwan',
-          getPostImageSrc: () => 'mock',
-          getPostDescription: () => 'description',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => true
-        }
-      ]
-      context.commit(MutationTypes.SET_FEEDS, mockFeeds)
-    }, 1000)
-    return true
+    if (context.state.loginUserId !== undefined) {
+      const req: GetFeedsInput = {
+        userId: context.state.loginUserId,
+        loginUserId: context.state.loginUserId
+      }
+      const feeds = await context.state.http.getFeeds(req)
+      context.commit(MutationTypes.SET_FEEDS, feeds)
+      return true
+    }
+    return false
   },
 
   async [ActionTypes.NAVIGATE_TO_USER_HOME] (context, param) {

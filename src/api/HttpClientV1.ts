@@ -1,8 +1,8 @@
-import { PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
+import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
 import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
-import { transformPostResponse, transformUserProfileResponse } from './Transformers'
-import { GetPostsInput, GetUserProfileInput, GetPostsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject } from './types'
+import { transformFeedResponse, transformPostResponse, transformUserProfileResponse } from './Transformers'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -56,7 +56,31 @@ export default class HttpClientV1 extends Client {
         return result
       }
 
-      return []
+      throw new Error('Network Error')
+    }
+
+    public async getFeeds (input: GetFeedsInput): Promise<FeedDomainModel[]> {
+      const res = await this.server.get('/api/v1/feeds/', {
+        params: {
+          userId: input.userId,
+          pageSize: '100'
+        }
+      })
+
+      if (res.status === 200) {
+        const result: FeedDomainModel[] = []
+        const data = res.data as GetFeedsResponse
+
+        for (const feed of data.feeds) {
+          const likedUsers = await this.getLikedUserIds(feed.postId)
+          const feedM = transformFeedResponse(feed, likedUsers, input.loginUserId)
+          result.push(feedM)
+        }
+
+        return result
+      }
+
+      throw new Error('Network Error')
     }
 
     private async getLikedUserIds (postId: string): Promise<string[]> {

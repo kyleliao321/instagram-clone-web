@@ -16,7 +16,7 @@
         <div class="feed-post-image">
             <img
                 style="width: 100%;"
-                src="../../assets/DEMO_001.jpg" />
+                :src="feed.getPostImageSrc()" />
         </div>
         <div class="feed-post-action-container">
             <v-btn icon>

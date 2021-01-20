@@ -40,7 +40,7 @@ export default class Posts extends Vue {
     .posts-container {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
     }
 </style>

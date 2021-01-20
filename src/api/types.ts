@@ -51,3 +51,23 @@ export type PostObject = {
 export type GetPostsResponse = {
     posts: PostObject[];
 }
+
+export type GetFeedsInput = {
+    userId: string;
+    loginUserId: string;
+}
+
+export type FeedObject = {
+    userId: string;
+    userName: string;
+    userImage: string|null;
+    postId: string;
+    location: string;
+    description: string;
+    timestamp: string;
+    postImage: string;
+}
+
+export type GetFeedsResponse = {
+    feeds: FeedObject[];
+}
