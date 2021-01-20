@@ -6,6 +6,13 @@ export enum ActionTypes {
     LOGIN = 'LOGIN'
 }
 
+export type ActionParam = {
+    [ActionTypes.LOGIN]: {
+        userName: string;
+        password: string;
+    };
+}
+
 type AugmentedActionContext = {
     commit<K extends keyof Mutations>(
         key: K,
@@ -14,5 +21,8 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export type Actions = {
-    [ActionTypes.LOGIN](context: AugmentedActionContext): Promise<void>;
+    [ActionTypes.LOGIN](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.LOGIN]
+    ): Promise<void>;
 }

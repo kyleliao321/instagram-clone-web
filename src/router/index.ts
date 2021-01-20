@@ -5,6 +5,7 @@ import Feeds from '../views/Feeds/Feeds.vue'
 import Home from '../views/Home/Home.vue'
 import Register from '../views/Register/Register.vue'
 import Login from '../views/Login/Login.vue'
+import { GetterTypes } from '@/store/types/getters-types'
 
 Vue.use(VueRouter)
 
@@ -47,7 +48,7 @@ const router = new VueRouter({
 // if given client is not logged in yet, redirect to login page
 router.beforeEach((to: Route, from: Route, next) => {
   if (to.matched.some(record => record.meta.requiredAuth)) {
-    if (!store.getters.isLogin) {
+    if (!store.getters[GetterTypes.IS_LOGIN]) {
       next({ name: 'Login' })
     } else {
       next()

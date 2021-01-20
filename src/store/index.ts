@@ -24,8 +24,10 @@ const mutations: MutationTree<State> & Mutations = {
 }
 
 const actions: ActionTree<State, State> & Actions = {
-  async [ActionTypes.LOGIN] (context) {
-    context.commit(MutationTypes.SET_LOGIN_USER_ID, 'mockId')
+  async [ActionTypes.LOGIN] (context, param) {
+    setTimeout(() => {
+      context.commit(MutationTypes.SET_LOGIN_USER_ID, param.userName + param.userName)
+    }, 5000)
   }
 }
 

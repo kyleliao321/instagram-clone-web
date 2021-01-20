@@ -21,7 +21,7 @@
                     @click.native="onLogin"
                     style="transform: translateY(-100%);"
                     outlined
-                    :disabled="!registerReady"
+                    :disabled="!loginReady"
                 >Login
                 </v-btn>
                 <h4
@@ -36,25 +36,42 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { isStringEmpty } from '../../utils/helpers'
+import { Action, Getter } from 'vuex-class'
+import { ActionParam, ActionTypes } from '@/store/types/action-types'
+import { GetterTypes } from '@/store/types/getters-types'
 
 @Component
 export default class Register extends Vue {
+    @Action(ActionTypes.LOGIN) private login !: (param: ActionParam[ActionTypes.LOGIN]) => Promise<void>
+    @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
+
     private userName = '';
     private password = '';
-    private registerReady = false;
+    private loginReady = false;
 
     private onNavigate () {
       this.$emit('onNavigate', 'Register')
     }
 
-    private onLogin () {
-      console.log(`Register with ${this.userName} ${this.password}`)
+    private async onLogin () {
+      const param = {
+        userName: this.userName,
+        password: this.password
+      }
+      await this.login(param)
+    }
+
+    @Watch('isLogin')
+    private onLoginStatusUpdate () {
+      if (this.isLogin) {
+        this.$emit('onNavigate', 'Home')
+      }
     }
 
     @Watch('userName')
     @Watch('password')
     private onUserNameChanged () {
-      this.registerReady = !isStringEmpty(this.userName) && !isStringEmpty(this.password)
+      this.loginReady = !isStringEmpty(this.userName) && !isStringEmpty(this.password)
     }
 }
 </script>
