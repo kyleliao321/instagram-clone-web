@@ -34,11 +34,15 @@
 </template>
 
 <script lang="ts">
+import { ActionParam, ActionTypes } from '@/store/types/action-types'
 import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
 import { isStringEmpty } from '../../utils/helpers'
 
 @Component
 export default class Register extends Vue {
+    @Action(ActionTypes.REGISTER) private register !: (param: ActionParam[ActionTypes.REGISTER]) => Promise<boolean>;
+
     private userName = '';
     private password = '';
     private registerReady = false;
@@ -47,8 +51,16 @@ export default class Register extends Vue {
       this.$emit('onNavigate', 'Login')
     }
 
-    private onRegister () {
-      console.log(`Register with ${this.userName} ${this.password}`)
+    private async onRegister () {
+      const param = {
+        userName: this.userName,
+        password: this.password
+      }
+      const succeed = await this.register(param)
+
+      if (succeed) {
+        this.$emit('onNavigate', 'Login')
+      }
     }
 
     @Watch('userName')

@@ -3,11 +3,16 @@ import { Mutations } from './mutation-types'
 import { State } from './state-types'
 
 export enum ActionTypes {
-    LOGIN = 'LOGIN'
+    LOGIN = 'LOGIN',
+    REGISTER = 'REGISTER'
 }
 
 export type ActionParam = {
     [ActionTypes.LOGIN]: {
+        userName: string;
+        password: string;
+    };
+    [ActionTypes.REGISTER]: {
         userName: string;
         password: string;
     };
@@ -25,4 +30,8 @@ export type Actions = {
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.LOGIN]
     ): Promise<void>;
+    [ActionTypes.REGISTER](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.REGISTER]
+    ): Promise<boolean>;
 }
