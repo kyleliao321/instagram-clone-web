@@ -9,6 +9,9 @@ export const getters: GetterTree<State, State> & Getters = {
   [GetterTypes.LOGIN_USER_ID] (state) {
     return state.loginUserId || ''
   },
+  [GetterTypes.LOGIN_USER_PROFILE] (state) {
+    return state.loginUserProfile
+  },
   [GetterTypes.FEEDS] (state) {
     return state.feeds
   },

@@ -1,3 +1,4 @@
+import { UserProfileDomainModel } from '@/utils/types/DomainModels'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -6,7 +7,17 @@ import { Actions, ActionTypes } from './action-types'
 export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.LOGIN] (context, param) {
     setTimeout(() => {
-      context.commit(MutationTypes.SET_LOGIN_USER_ID, param.userName + param.userName)
+      const mockLoginUserProfile: UserProfileDomainModel = {
+        getUserId: () => 'loginUserId',
+        getAlias: () => 'loginUser',
+        getUserName: () => param.userName,
+        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
+        getFollowingNum: () => 10,
+        getFollowerNum: () => 10,
+        getPostNum: () => 10
+      }
+      context.commit(MutationTypes.SET_LOGIN_USER_PROFILE, mockLoginUserProfile)
+      context.commit(MutationTypes.SET_LOGIN_USER_ID, mockLoginUserProfile.getUserId())
     }, 1000)
     return param.userName + param.userName
   },

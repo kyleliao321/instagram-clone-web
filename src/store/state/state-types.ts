@@ -2,6 +2,7 @@ import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/util
 
 export type State = {
     loginUserId: string|undefined;
+    loginUserProfile: UserProfileDomainModel|undefined;
     feeds: FeedDomainModel[];
     browsingHomeUserId: string|undefined;
     browsingUserProfile: UserProfileDomainModel|undefined;

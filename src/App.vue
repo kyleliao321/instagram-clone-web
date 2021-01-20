@@ -34,15 +34,20 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Action, Getter } from 'vuex-class'
 import { ActionParam, ActionTypes } from './store/actions/action-types'
 import { GetterTypes } from './store/getters/getters-types'
+import { UserProfileDomainModel } from './utils/types/DomainModels'
 
 @Component
 export default class App extends Vue {
   @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
   @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
   @Getter(GetterTypes.LOGIN_USER_ID) private loginUserId !: string;
+  @Getter(GetterTypes.LOGIN_USER_PROFILE) private loginUser !: UserProfileDomainModel|undefined;
 
-  get loginUserImageSrc (): string {
-    return 'https://cdn.vuetifyjs.com/images/john.jpg'
+  get loginUserImageSrc (): string | null {
+    if (this.loginUser !== undefined) {
+      return this.loginUser.getUserImageSrc()
+    }
+    throw new Error('Illega state')
   }
 
   get currentRouteName (): string {
