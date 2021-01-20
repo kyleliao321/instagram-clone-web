@@ -71,3 +71,9 @@ export type FeedObject = {
 export type GetFeedsResponse = {
     feeds: FeedObject[];
 }
+
+export type LikeOrDislikePostInput = {
+    userId: string;
+    postId: string;
+    authToken: string;
+}

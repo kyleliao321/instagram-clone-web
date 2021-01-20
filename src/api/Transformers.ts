@@ -23,7 +23,7 @@ export function transformPostResponse (post: PostObject, likedUserIds: string[],
     getPostUseId: () => post.postedUserid,
     getPostImageSrc: () => `http://localhost:8080/static/${post.imageSrc}`,
     getPostLikedNum: () => likedUserIds.length,
-    getUserLikedPost: () => loginUserId in likedUserIds
+    getUserLikedPost: () => likedUserIds.includes(loginUserId)
   })
 }
 
@@ -37,6 +37,6 @@ export function transformFeedResponse (feed: FeedObject, likedUserIds: string[],
     getPostLocation: () => feed.location,
     getPostImageSrc: () => `http://localhost:8080/static/${feed.postImage}`,
     getPostLikedNum: () => likedUserIds.length,
-    getUserLikedPost: () => loginUserId in likedUserIds
+    getUserLikedPost: () => likedUserIds.includes(loginUserId)
   })
 }

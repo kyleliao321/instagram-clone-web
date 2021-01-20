@@ -8,7 +8,8 @@ export enum ActionTypes {
     FETCH_FEEDS = 'FETCH_FEEDS',
     NAVIGATE_TO_USER_HOME = 'NAVIGATE_TO_USER_HOME',
     FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
-    FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS'
+    FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS',
+    LIKE_OR_DISLIKE_POST = 'LIKE_OR_DISLIKE_POST'
 }
 
 export type ActionParam = {
@@ -28,6 +29,10 @@ export type ActionParam = {
     };
     [ActionTypes.FETCH_BROWSING_USER_POSTS]: {
         userId: string;
+    };
+    [ActionTypes.LIKE_OR_DISLIKE_POST]: {
+        postId: string;
+        browsingUserId: string|undefined;
     };
 }
 
@@ -67,4 +72,9 @@ export type Actions = {
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]
     ): Promise<boolean>;
+
+    [ActionTypes.LIKE_OR_DISLIKE_POST](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]
+    ): Promise<void>;
 }

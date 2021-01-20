@@ -29,12 +29,19 @@ Vue.component('ig-posts', Posts)
 export default class Home extends Vue {
   @Action(ActionTypes.FETCH_BROWSING_USER_PROFILE) private fetchBrowsingUserProfile !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_PROFILE]) => Promise<boolean>
   @Action(ActionTypes.FETCH_BROWSING_USER_POSTS) private fetchBrowsingPosts !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]) => Promise<boolean>
+  @Action(ActionTypes.LIKE_OR_DISLIKE_POST) private likeOrDislikePost !: (param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]) => Promise<void>
   @Getter(GetterTypes.BROWSING_HOME_USER_ID) private browsingHomeUserId !: string|undefined;
   @Getter(GetterTypes.BROWSING_USER_PROFILE) private browsingUserProfile !: UserProfileDomainModel|undefined;
   @Getter(GetterTypes.BROWSING_USER_POSTS) private posts !: PostDomainModel[];
 
-  private onLikeButtonClicked (postId: string) {
-    console.log(`like ${postId}`)
+  private async onLikeButtonClicked (postId: string) {
+    if (this.browsingHomeUserId !== undefined) {
+      const param = {
+        postId,
+        browsingUserId: this.browsingHomeUserId
+      }
+      await this.likeOrDislikePost(param)
+    }
   }
 
   private created () {

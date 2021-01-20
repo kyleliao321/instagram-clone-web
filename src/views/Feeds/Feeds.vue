@@ -6,6 +6,7 @@
                 v-for="(feed) in feeds"
                 :key="feed.getPostId()"
                 :feed="feed"
+                @onLikeButtonClick="onLikeButtonClick"
                 @onUserImageClick="onUserImageClick" />
         </div>
     </div>
@@ -24,8 +25,13 @@ Vue.component('ig-feed-card', FeedCard)
 @Component
 export default class Feeds extends Vue {
     @Action(ActionTypes.FETCH_FEEDS) private fetchFeeds !: () => Promise<boolean>;
+    @Action(ActionTypes.LIKE_OR_DISLIKE_POST) private likeOrDislikePost !: (param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]) => Promise<void>;
     @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
     @Getter(GetterTypes.FEEDS) private feeds !: FeedDomainModel[];
+
+    private async onLikeButtonClick (postId: string) {
+      await this.likeOrDislikePost({ postId, browsingUserId: undefined })
+    }
 
     private async onUserImageClick (userId: string) {
       await this.navigateToUserHome({ userId })

@@ -1,4 +1,4 @@
-import { GetFeedsInput } from '@/api/types'
+import { GetFeedsInput, LikeOrDislikePostInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -61,5 +61,21 @@ export const actions: ActionTree<State, State> & Actions = {
       return true
     }
     return false
+  },
+
+  async [ActionTypes.LIKE_OR_DISLIKE_POST] (context, param) {
+    if (context.state.authToken !== undefined && context.state.loginUserId !== undefined) {
+      const req: LikeOrDislikePostInput = {
+        userId: context.state.loginUserId,
+        postId: param.postId,
+        authToken: context.state.authToken
+      }
+      await context.state.http.likeOrDislikePost(req)
+
+      if (param.browsingUserId !== undefined) {
+        await context.dispatch(ActionTypes.FETCH_BROWSING_USER_POSTS, { userId: param.browsingUserId })
+      }
+      await context.dispatch(ActionTypes.FETCH_FEEDS)
+    }
   }
 }

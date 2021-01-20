@@ -20,7 +20,10 @@
         </div>
         <div class="feed-post-action-container">
             <v-btn icon>
-                <ig-icons :icon="likeIcon" style="width: 35px; height: 35px; " />
+                <ig-icons
+                    @click.native="onLikeButtonClick"
+                    :icon="likeIcon"
+                    style="width: 35px; height: 35px; " />
             </v-btn>
             <h5 style="align-self: center; margin-left: 10px;">{{likeNum}} likes</h5>
         </div>
@@ -59,6 +62,10 @@ export default class FeedCard extends Vue {
 
     get likeNum (): string {
       return this.feed.getPostLikedNum().toString()
+    }
+
+    private onLikeButtonClick () {
+      this.$emit('onLikeButtonClick', this.feed.getPostId())
     }
 
     private onUserImageClick () {

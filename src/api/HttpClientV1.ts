@@ -2,7 +2,7 @@ import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/util
 import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
 import { transformFeedResponse, transformPostResponse, transformUserProfileResponse } from './Transformers'
-import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput } from './types'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -81,6 +81,40 @@ export default class HttpClientV1 extends Client {
       }
 
       throw new Error('Network Error')
+    }
+
+    public async likeOrDislikePost (input: LikeOrDislikePostInput): Promise<void> {
+      const likedUsers = await this.getLikedUserIds(input.postId)
+
+      if (likedUsers.includes(input.userId)) {
+        // dislike post
+        const res = await this.server.delete(
+          `/api/v1/likes/user/${input.userId}/post/${input.postId}`,
+          {
+            headers: { Authorization: `Bearer ${input.authToken}` }
+          }
+        )
+
+        if (res.status !== 200) {
+          throw new Error('Network Error')
+        }
+      } else {
+        // like post
+        const res = await this.server.post(
+          '/api/v1/likes/',
+          {
+            userId: input.userId,
+            postId: input.postId
+          },
+          {
+            headers: { Authorization: `Bearer ${input.authToken}` }
+          }
+        )
+
+        if (res.status !== 201) {
+          throw new Error('Network Error')
+        }
+      }
     }
 
     private async getLikedUserIds (postId: string): Promise<string[]> {
