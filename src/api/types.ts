@@ -19,15 +19,35 @@ export type GetUserProfileInput = {
     userId: string;
 }
 
+export type UserProfileObject = {
+    id: string;
+    userName: string;
+    alias: string;
+    description: string;
+    imageSrc: string|null;
+    postNum: number;
+    followerNum: number;
+    followingNum: number;
+}
+
 export type GetUserProfileResponse = {
-    user: {
-        id: string;
-        userName: string;
-        alias: string;
-        description: string;
-        imageSrc: string|null;
-        postNum: number;
-        followerNum: number;
-        followingNum: number;
-    };
+    user: UserProfileObject;
+}
+
+export type GetPostsInput = {
+    userId: string;
+    loginUserId: string;
+}
+
+export type PostObject = {
+    id: string;
+    description: string;
+    location: string;
+    timestamp: string;
+    imageSrc: string;
+    postedUserid: string;
+}
+
+export type GetPostsResponse = {
+    posts: PostObject[];
 }

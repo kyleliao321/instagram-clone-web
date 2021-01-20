@@ -1,8 +1,8 @@
-import { UserProfileDomainModel } from '@/utils/types/DomainModels'
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import { PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
+import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
-import { transformUserProfileResponse } from './Transformers'
-import { GetUserProfileInput, GetUserProfileResponse, LoginInput, LoginResponse, RegisterInput } from './types'
+import { transformPostResponse, transformUserProfileResponse } from './Transformers'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -28,12 +28,46 @@ export default class HttpClientV1 extends Client {
     }
 
     public async getUserProfile (input: GetUserProfileInput): Promise<UserProfileDomainModel|undefined> {
-      const res = await this.server.get(`/api/v1/users/${input.userId}`, {
-        transformResponse: [transformUserProfileResponse]
+      const res = await this.server.get(`/api/v1/users/${input.userId}`)
+
+      if (res.status === 200) {
+        return transformUserProfileResponse(res.data)
+      }
+    }
+
+    public async getPosts (input: GetPostsInput): Promise<PostDomainModel[]> {
+      const res = await this.server.get('/api/v1/posts/', {
+        params: {
+          userId: input.userId
+        }
       })
 
       if (res.status === 200) {
-        return res.data
+        const data = res.data as GetPostsResponse
+
+        const result: PostDomainModel[] = []
+
+        for (const post of data.posts) {
+          const likedUsers = await this.getLikedUserIds(post.id)
+          const postM = transformPostResponse(post, likedUsers, input.loginUserId)
+          result.push(postM)
+        }
+
+        return result
       }
+
+      return []
+    }
+
+    private async getLikedUserIds (postId: string): Promise<string[]> {
+      const res = await this.server.get('/api/v1/likes/', {
+        params: { postId }
+      })
+
+      if (res.status === 200) {
+        return res.data.likedUsers.map((u: UserProfileObject) => u.id)
+      }
+
+      throw new Error('Network Error')
     }
 }

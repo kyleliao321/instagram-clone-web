@@ -9,7 +9,7 @@
                 <div v-bind="attrs" v-on="on" style="width: 200px; height: 200px; padding: 2px;">
                     <img
                         style="width:100%;"
-                        src="../../assets/DEMO_001.jpg"
+                        :src="post.getPostImageSrc()"
                     />
                 </div>
             </template>

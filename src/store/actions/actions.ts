@@ -91,54 +91,15 @@ export const actions: ActionTree<State, State> & Actions = {
   },
 
   async [ActionTypes.FETCH_BROWSING_USER_POSTS] (context, param) {
-    setTimeout(() => {
-      console.log(`fetch user posts with ${param.userId}`)
-
-      const mockPosts = [
-        {
-          getPostId: () => 'mockPost1',
-          getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-          getPostLocation: () => 'Taiwan',
-          getPostDate: () => '2020/03/21 21:31',
-          getPostDescription: () => 'This post gonna have alot of message here.',
-          getPostUseId: () => 'mockId',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => false
-        },
-        {
-          getPostId: () => 'mockPost2',
-          getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-          getPostLocation: () => 'Chicago',
-          getPostDate: () => '2019/03/21 21:31',
-          getPostDescription: () => 'This post gonna have alot of message here.',
-          getPostUseId: () => 'mockId',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => true
-        },
-        {
-          getPostId: () => 'mockPost3',
-          getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-          getPostLocation: () => 'Japan',
-          getPostDate: () => '2019/03/21 21:31',
-          getPostDescription: () => 'This post gonna have alot of message here.',
-          getPostUseId: () => 'mockId',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => false
-        },
-        {
-          getPostId: () => 'mockPost4',
-          getPostImageSrc: () => '../../assets/DEMO_001.jpg',
-          getPostLocation: () => 'USA',
-          getPostDate: () => '2019/03/21 21:31',
-          getPostDescription: () => 'This post gonna have alot of message here.',
-          getPostUseId: () => 'mockId',
-          getPostLikedNum: () => 100,
-          getUserLikedPost: () => true
-        }
-      ]
-
-      context.commit(MutationTypes.SET_BROWSING_USER_POSTS, mockPosts)
-    }, 1000)
-    return true
+    if (context.state.loginUserId !== undefined) {
+      const req = {
+        userId: param.userId,
+        loginUserId: context.state.loginUserId
+      }
+      const data = await context.state.http.getPosts(req)
+      context.commit(MutationTypes.SET_BROWSING_USER_POSTS, data)
+      return true
+    }
+    return false
   }
 }

@@ -3,7 +3,7 @@
         <div class="post-detail-image-container">
             <img
                 style="width: 100%;"
-                src="../../assets/DEMO_001.jpg" />
+                :src="post.getPostImageSrc()" />
         </div>
         <div class="post-detail-metadata-container">
             <div class="post-detail-info">
