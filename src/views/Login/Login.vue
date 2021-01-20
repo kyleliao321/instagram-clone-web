@@ -65,8 +65,7 @@ export default class Register extends Vue {
     @Watch('loginUserId')
     private async onLoginStatusUpdate () {
       if (this.loginUserId !== undefined) {
-        await this.navigateToUserHome({ userId: this.loginUserId })
-        this.$emit('onNavigate', 'Home')
+        this.$emit('onNavigate', 'Feeds')
       }
     }
 
