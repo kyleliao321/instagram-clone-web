@@ -84,8 +84,16 @@ export const actions: ActionTree<State, State> & Actions = {
   },
 
   async [ActionTypes.SEARCH_USER_PROFILE] (context, param) {
-    const req: SearchUserInput = { ...param }
-    const searched = await context.state.http.searchUserProfiles(req)
-    context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, searched)
+    if (param.keyword !== '') {
+      const req: SearchUserInput = { ...param }
+      const searched = await context.state.http.searchUserProfiles(req)
+      context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, searched)
+    } else {
+      context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, [])
+    }
+  },
+
+  async [ActionTypes.CLEAN_UP_SERACHED] (context) {
+    context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, [])
   }
 }

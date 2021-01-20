@@ -3,9 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import vClickOutside from 'v-click-outside'
 import './plugins/components'
 
 Vue.config.productionTip = false
+
+Vue.use(vClickOutside)
 
 new Vue({
   router,

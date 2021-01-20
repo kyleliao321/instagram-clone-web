@@ -11,7 +11,8 @@ export enum ActionTypes {
     FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
     FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS',
     LIKE_OR_DISLIKE_POST = 'LIKE_OR_DISLIKE_POST',
-    SEARCH_USER_PROFILE = 'SEARCH_USER_PROFILE'
+    SEARCH_USER_PROFILE = 'SEARCH_USER_PROFILE',
+    CLEAN_UP_SERACHED = 'CLEAN_UP_SERACHED'
 }
 
 export type ActionParam = {
@@ -90,5 +91,9 @@ export type Actions = {
     [ActionTypes.SEARCH_USER_PROFILE](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.SEARCH_USER_PROFILE]
+    ): Promise<void>;
+
+    [ActionTypes.CLEAN_UP_SERACHED](
+        context: AugmentedActionContext
     ): Promise<void>;
 }

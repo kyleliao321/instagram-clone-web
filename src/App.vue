@@ -8,7 +8,15 @@
       style="padding: 0px 80px 0px 40px; "
     >
       <v-toolbar-title>Demo Application</v-toolbar-title>
+
       <v-spacer></v-spacer>
+        <ig-user-search-field
+          v-show="currentRouteName !== 'Home'"
+          :searchedUserProfiles="searchedUsers"
+          @onSearchedUserClick="onSearchedUserClick"
+          @onKeywordUpdate="onKeywordUpdate"/>
+      <v-spacer></v-spacer>
+
       <v-btn icon>
         <ig-icons
           @click.native="navigateToFeeds"
@@ -40,9 +48,12 @@ import { UserProfileDomainModel } from './utils/types/DomainModels'
 export default class App extends Vue {
   @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
   @Action(ActionTypes.LOGOUT) private logout !: () => Promise<void>;
+  @Action(ActionTypes.CLEAN_UP_SERACHED) private cleanUpSearched !: () => Promise<void>;
+  @Action(ActionTypes.SEARCH_USER_PROFILE) private searchUsers !: (param: ActionParam[ActionTypes.SEARCH_USER_PROFILE]) => Promise<void>;
   @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
   @Getter(GetterTypes.LOGIN_USER_ID) private loginUserId !: string;
   @Getter(GetterTypes.LOGIN_USER_PROFILE) private loginUser !: UserProfileDomainModel|undefined;
+  @Getter(GetterTypes.SEARCHED_USER_PROFILE) private searchedUsers !: UserProfileDomainModel[];
 
   get loginUserImageSrc (): string | null {
     if (this.loginUser !== undefined) {
@@ -64,6 +75,16 @@ export default class App extends Vue {
       'User Profile',
       'Logout'
     ]
+  }
+
+  private onSearchedUserClick (user: UserProfileDomainModel) {
+    this.navigateToUserHome({ userId: user.getUserId() })
+    this.onNavigate('Home')
+    this.cleanUpSearched()
+  }
+
+  private async onKeywordUpdate (keyword: string) {
+    await this.searchUsers({ keyword })
   }
 
   private async onOptionClicked (optionName: string) {
