@@ -6,7 +6,7 @@
               class="user-profile-container"
               :browsingUserProfile="browsingUserProfile" />
           <ig-posts
-              style="margin-top: 20px; width: 600px;"
+              style="margin-top: 20px; width: 900px;"
               :posts="posts"
               :belongUserProfile="browsingUserProfile"
               @onLikeButtonClicked="onLikeButtonClicked" />
@@ -65,9 +65,10 @@ export default class Home extends Vue {
     .home-colume {
       display: flex;
       flex-direction: column;
+      width: 900px;
     }
     .user-profile-container {
-        width: 600px;
+        width: 900px;
         height: 100%;
         border-bottom: 1px solid gray;
     }

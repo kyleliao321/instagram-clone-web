@@ -6,7 +6,7 @@
             width="860px"
         >
             <template v-slot:activator="{ on, attrs }">
-                <div v-bind="attrs" v-on="on" style="width: 200px; height: 200px; padding: 2px;">
+                <div v-bind="attrs" v-on="on" style="width: 300px; height: 300px; padding: 2px;">
                     <img
                         style="width:100%;"
                         :src="post.getPostImageSrc()"
