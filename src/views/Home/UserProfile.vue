@@ -29,27 +29,27 @@ export default class UserProifle extends Vue {
   @Prop() private browsingUserProfile !: UserProfileDomainModel;
 
   get userImageSrc (): string|null {
-    return this.browsingUserProfile.getUserImageSrc()
+    return this.browsingUserProfile.userImageSrc
   }
 
   get userName (): string {
-    return this.browsingUserProfile.getUserName()
+    return this.browsingUserProfile.userName
   }
 
   get userAlias (): string {
-    return this.browsingUserProfile.getAlias()
+    return this.browsingUserProfile.alias
   }
 
   get postsNum (): string {
-    return `${this.browsingUserProfile.getPostNum()}`
+    return `${this.browsingUserProfile.postNum}`
   }
 
   get followingNum (): string {
-    return `${this.browsingUserProfile.getFollowingNum()}`
+    return `${this.browsingUserProfile.followingNum}`
   }
 
   get followerNum (): string {
-    return `${this.browsingUserProfile.getFollowerNum()}`
+    return `${this.browsingUserProfile.followerNum}`
   }
 }
 </script>

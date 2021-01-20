@@ -45,7 +45,7 @@ export default class App extends Vue {
 
   get loginUserImageSrc (): string | null {
     if (this.loginUser !== undefined) {
-      return this.loginUser.getUserImageSrc()
+      return this.loginUser.userImageSrc
     }
     throw new Error('Illega state')
   }

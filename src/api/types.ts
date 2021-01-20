@@ -20,12 +20,14 @@ export type GetUserProfileInput = {
 }
 
 export type GetUserProfileResponse = {
-    id: string;
-    userName: string;
-    alias: string;
-    description: string;
-    imageSrc: string|null;
-    postNum: number;
-    followerNum: number;
-    followingNum: number;
+    user: {
+        id: string;
+        userName: string;
+        alias: string;
+        description: string;
+        imageSrc: string|null;
+        postNum: number;
+        followerNum: number;
+        followingNum: number;
+    };
 }

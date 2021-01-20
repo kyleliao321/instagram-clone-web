@@ -1,14 +1,16 @@
 import { UserProfileDomainModel } from '@/utils/types/DomainModels'
 import { GetUserProfileResponse } from './types'
 
-export function transformUserProfileResponse (data: GetUserProfileResponse): UserProfileDomainModel {
+export function transformUserProfileResponse (data: string): UserProfileDomainModel {
+  const payload = JSON.parse(data)
+  const user = payload.user
   return Object.freeze({
-    getUserId: () => data.id,
-    getUserName: () => data.userName,
-    getAlias: () => data.alias,
-    getUserImageSrc: () => data.imageSrc,
-    getPostNum: () => data.postNum,
-    getFollowerNum: () => data.followerNum,
-    getFollowingNum: () => data.followingNum
+    userId: user.id,
+    userName: user.userName,
+    alias: user.alias,
+    userImageSrc: user.imageSrc ?? null,
+    postNum: user.postNum,
+    followerNum: user.followerNum,
+    followingNum: user.followingNum
   })
 }

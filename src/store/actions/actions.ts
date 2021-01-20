@@ -1,4 +1,3 @@
-import { UserProfileDomainModel } from '@/utils/types/DomainModels'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -6,20 +5,14 @@ import { Actions, ActionTypes } from './action-types'
 
 export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.LOGIN] (context, param) {
-    setTimeout(() => {
-      const mockLoginUserProfile: UserProfileDomainModel = {
-        getUserId: () => 'loginUserId',
-        getAlias: () => 'loginUser',
-        getUserName: () => param.userName,
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getFollowingNum: () => 10,
-        getFollowerNum: () => 10,
-        getPostNum: () => 10
-      }
-      context.commit(MutationTypes.SET_LOGIN_USER_PROFILE, mockLoginUserProfile)
-      context.commit(MutationTypes.SET_LOGIN_USER_ID, mockLoginUserProfile.getUserId())
-    }, 1000)
-    return param.userName + param.userName
+    const loginPayload = await context.state.http.login({ ...param })
+    if (loginPayload !== undefined) {
+      const userProfile = await context.state.http.getUserProfile({ userId: loginPayload.credential.userId })
+      context.commit(MutationTypes.SET_LOGIN_USER_ID, loginPayload.credential.userId)
+      context.commit(MutationTypes.SET_LOGIN_USER_PROFILE, userProfile)
+      return loginPayload.credential.userId
+    }
+    throw new Error('Network Error')
   },
 
   async [ActionTypes.REGISTER] (context, param) {
@@ -88,22 +81,13 @@ export const actions: ActionTree<State, State> & Actions = {
   },
 
   async [ActionTypes.FETCH_BROWSING_USER_PROFILE] (context, param) {
-    setTimeout(() => {
-      console.log(`fetch user profile with ${param.userId}`)
-
-      const mockProfile = Object.freeze({
-        getUserId: () => 'mockId',
-        getUserName: () => 'kyleliao0321',
-        getAlias: () => 'Kyle',
-        getUserImageSrc: () => 'https://cdn.vuetifyjs.com/images/john.jpg',
-        getPostNum: () => 10,
-        getFollowingNum: () => 10,
-        getFollowerNum: () => 10
-      })
-
-      context.commit(MutationTypes.SET_BROWSING_USER_PROFILE, mockProfile)
-    }, 1000)
-    return true
+    const userProfile = await context.state.http.getUserProfile({ ...param })
+    if (userProfile !== undefined) {
+      console.log(userProfile)
+      context.commit(MutationTypes.SET_BROWSING_USER_PROFILE, userProfile)
+      return true
+    }
+    return false
   },
 
   async [ActionTypes.FETCH_BROWSING_USER_POSTS] (context, param) {
