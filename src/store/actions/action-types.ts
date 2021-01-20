@@ -4,6 +4,7 @@ import { Mutations } from '../mutations'
 
 export enum ActionTypes {
     LOGIN = 'LOGIN',
+    LOGOUT = 'LOGOUT',
     REGISTER = 'REGISTER',
     FETCH_FEEDS = 'FETCH_FEEDS',
     NAVIGATE_TO_USER_HOME = 'NAVIGATE_TO_USER_HOME',
@@ -48,6 +49,10 @@ export type Actions = {
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.LOGIN]
     ): Promise<string>;
+
+    [ActionTypes.LOGOUT](
+        context: AugmentedActionContext
+    ): Promise<void>;
 
     [ActionTypes.REGISTER](
         context: AugmentedActionContext,

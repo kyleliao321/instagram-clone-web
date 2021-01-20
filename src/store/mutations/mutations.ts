@@ -23,5 +23,14 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_BROWSING_USER_POSTS] (state, payload) {
     state.browsingUserPosts = payload
+  },
+  [MutationTypes.RESET_ALL] (state) {
+    state.authToken = undefined
+    state.loginUserId = undefined
+    state.loginUserProfile = undefined
+    state.feeds = []
+    state.browsingHomeUserId = undefined
+    state.browsingUserProfile = undefined
+    state.browsingUserPosts = []
   }
 }

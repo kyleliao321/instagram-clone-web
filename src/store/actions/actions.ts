@@ -17,6 +17,10 @@ export const actions: ActionTree<State, State> & Actions = {
     throw new Error('Network Error')
   },
 
+  async [ActionTypes.LOGOUT] (context) {
+    context.commit(MutationTypes.RESET_ALL, undefined)
+  },
+
   async [ActionTypes.REGISTER] (context, param) {
     const result = await context.state.http.register({ ...param })
     return result

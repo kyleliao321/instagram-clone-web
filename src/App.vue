@@ -39,6 +39,7 @@ import { UserProfileDomainModel } from './utils/types/DomainModels'
 @Component
 export default class App extends Vue {
   @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
+  @Action(ActionTypes.LOGOUT) private logout !: () => Promise<void>;
   @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
   @Getter(GetterTypes.LOGIN_USER_ID) private loginUserId !: string;
   @Getter(GetterTypes.LOGIN_USER_PROFILE) private loginUser !: UserProfileDomainModel|undefined;
@@ -65,9 +66,12 @@ export default class App extends Vue {
     ]
   }
 
-  private onOptionClicked (optionName: string) {
+  private async onOptionClicked (optionName: string) {
     if (optionName === 'Profile') {
       this.navigateToHome()
+    } else if (optionName === 'Logout') {
+      await this.logout()
+      this.onNavigate('Login')
     }
   }
 
