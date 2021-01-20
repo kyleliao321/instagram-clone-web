@@ -3,12 +3,17 @@
         <img
             v-if="imageSrc !== null"
             :src="imageSrc" />
-        <v-icon x-large v-else :size="size">mdi-account-circle</v-icon>
+        <ig-icons
+            v-else
+            icon="DefaultAvatar" />
     </v-avatar>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import Icons from './Icons.vue'
+
+Vue.component('ig-icons', Icons)
 
 @Component
 export default class Avatar extends Vue {
