@@ -5,6 +5,7 @@
       v-if="isLogin"
       fixed
       color="white"
+      style="padding: 0px 80px 0px 40px; "
     >
       <v-toolbar-title>Demo Application</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -14,11 +15,10 @@
           :icon="homeIcon"
           style="width: 40px; height: 40px;"/>
       </v-btn>
-      <ig-avatar
-        @click.native="navigateToHome"
-        style="cursor: pointer; "
-        :imageSrc="loginUserImageSrc"
-        size="52" />
+      <ig-user-menu
+        :loginUserImageSrc="loginUserImageSrc"
+        @onOptionClicked="onOptionClicked"
+      />
     </v-app-bar>
     <v-main style="padding-top: 75px;">
       <router-view
@@ -58,8 +58,20 @@ export default class App extends Vue {
     return this.currentRouteName === 'Feeds' ? 'HomeClicked' : 'Home'
   }
 
+  get userOptions (): string[] {
+    return [
+      'User Profile',
+      'Logout'
+    ]
+  }
+
+  private onOptionClicked (optionName: string) {
+    if (optionName === 'Profile') {
+      this.navigateToHome()
+    }
+  }
+
   private onNavigate (dest: string) {
-    console.log(`navigate ${dest}`)
     if (this.currentRouteName !== dest) {
       this.$router.push({ name: dest })
     }
