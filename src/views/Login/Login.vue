@@ -42,12 +42,14 @@ import { GetterTypes } from '@/store/getters/getters-types'
 
 @Component
 export default class Register extends Vue {
-    @Action(ActionTypes.LOGIN) private login !: (param: ActionParam[ActionTypes.LOGIN]) => Promise<void>
+    @Action(ActionTypes.LOGIN) private login !: (param: ActionParam[ActionTypes.LOGIN]) => Promise<string>
+    @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
     @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
 
     private userName = '';
     private password = '';
     private loginReady = false;
+    private loginUserId: string|undefined = undefined;
 
     private onNavigate () {
       this.$emit('onNavigate', 'Register')
@@ -58,12 +60,13 @@ export default class Register extends Vue {
         userName: this.userName,
         password: this.password
       }
-      await this.login(param)
+      this.loginUserId = await this.login(param)
     }
 
     @Watch('isLogin')
-    private onLoginStatusUpdate () {
+    private async onLoginStatusUpdate () {
       if (this.isLogin) {
+        await this.navigateToUserHome({ userId: this.loginUserId })
         this.$emit('onNavigate', 'Home')
       }
     }

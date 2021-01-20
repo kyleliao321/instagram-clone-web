@@ -29,6 +29,7 @@ Vue.component('ig-posts', Posts)
 export default class Home extends Vue {
   @Action(ActionTypes.FETCH_BROWSING_USER_PROFILE) private fetchBrowsingUserProfile !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_PROFILE]) => Promise<boolean>
   @Action(ActionTypes.FETCH_BROWSING_USER_POSTS) private fetchBrowsingPosts !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]) => Promise<boolean>
+  @Getter(GetterTypes.BROWSING_HOME_USER_ID) private browsingHomeUserId !: string|undefined;
   @Getter(GetterTypes.BROWSING_USER_PROFILE) private browsingUserProfile !: UserProfileDomainModel|undefined;
   @Getter(GetterTypes.BROWSING_USER_POSTS) private posts !: PostDomainModel[];
 
@@ -37,8 +38,12 @@ export default class Home extends Vue {
   }
 
   private created () {
-    this.fetchBrowsingUserProfile({ userId: 'mockId' })
-    this.fetchBrowsingPosts({ userId: 'mockId' })
+    if (this.browsingHomeUserId !== undefined) {
+      this.fetchBrowsingUserProfile({ userId: this.browsingHomeUserId })
+      this.fetchBrowsingPosts({ userId: this.browsingHomeUserId })
+    } else {
+      throw new Error('Browsing Home User Id is undefined')
+    }
   }
 }
 </script>

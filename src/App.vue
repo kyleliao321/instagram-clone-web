@@ -31,12 +31,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Action, Getter } from 'vuex-class'
+import { ActionParam, ActionTypes } from './store/actions/action-types'
 import { GetterTypes } from './store/getters/getters-types'
 
 @Component
 export default class App extends Vue {
+  @Action(ActionTypes.NAVIGATE_TO_USER_HOME) private navigateToUserHome !: (param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]) => Promise<boolean>;
   @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
+  @Getter(GetterTypes.LOGIN_USER_ID) private loginUserId !: string;
 
   get loginUserImageSrc (): string {
     return 'https://cdn.vuetifyjs.com/images/john.jpg'
@@ -65,6 +68,7 @@ export default class App extends Vue {
 
   private navigateToHome () {
     if (this.currentRouteName !== 'Home') {
+      this.navigateToUserHome({ userId: this.loginUserId })
       this.$router.push({ name: 'Home' })
     }
   }

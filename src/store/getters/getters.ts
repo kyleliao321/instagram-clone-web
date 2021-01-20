@@ -6,8 +6,14 @@ export const getters: GetterTree<State, State> & Getters = {
   [GetterTypes.IS_LOGIN] (state) {
     return state.loginUserId !== undefined
   },
+  [GetterTypes.LOGIN_USER_ID] (state) {
+    return state.loginUserId || ''
+  },
   [GetterTypes.FEEDS] (state) {
     return state.feeds
+  },
+  [GetterTypes.BROWSING_HOME_USER_ID] (state) {
+    return state.browsingHomeUserId
   },
   [GetterTypes.BROWSING_USER_PROFILE] (state) {
     return state.browsingUserProfile

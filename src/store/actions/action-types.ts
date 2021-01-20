@@ -6,6 +6,7 @@ export enum ActionTypes {
     LOGIN = 'LOGIN',
     REGISTER = 'REGISTER',
     FETCH_FEEDS = 'FETCH_FEEDS',
+    NAVIGATE_TO_USER_HOME = 'NAVIGATE_TO_USER_HOME',
     FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
     FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS'
 }
@@ -18,6 +19,9 @@ export type ActionParam = {
     [ActionTypes.REGISTER]: {
         userName: string;
         password: string;
+    };
+    [ActionTypes.NAVIGATE_TO_USER_HOME]: {
+        userId: string|undefined;
     };
     [ActionTypes.FETCH_BROWSING_USER_PROFILE]: {
         userId: string;
@@ -38,7 +42,7 @@ export type Actions = {
     [ActionTypes.LOGIN](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.LOGIN]
-    ): Promise<void>;
+    ): Promise<string>;
 
     [ActionTypes.REGISTER](
         context: AugmentedActionContext,
@@ -47,6 +51,11 @@ export type Actions = {
 
     [ActionTypes.FETCH_FEEDS](
         context: AugmentedActionContext
+    ): Promise<boolean>;
+
+    [ActionTypes.NAVIGATE_TO_USER_HOME](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.NAVIGATE_TO_USER_HOME]
     ): Promise<boolean>;
 
     [ActionTypes.FETCH_BROWSING_USER_PROFILE](

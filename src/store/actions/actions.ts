@@ -8,6 +8,7 @@ export const actions: ActionTree<State, State> & Actions = {
     setTimeout(() => {
       context.commit(MutationTypes.SET_LOGIN_USER_ID, param.userName + param.userName)
     }, 1000)
+    return param.userName + param.userName
   },
 
   async [ActionTypes.REGISTER] (context, param) {
@@ -67,6 +68,11 @@ export const actions: ActionTree<State, State> & Actions = {
       ]
       context.commit(MutationTypes.SET_FEEDS, mockFeeds)
     }, 1000)
+    return true
+  },
+
+  async [ActionTypes.NAVIGATE_TO_USER_HOME] (context, param) {
+    context.commit(MutationTypes.SET_BROWSING_HOME_UESR_ID, param.userId)
     return true
   },
 

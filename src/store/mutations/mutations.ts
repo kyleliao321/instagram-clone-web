@@ -9,6 +9,9 @@ export const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.SET_FEEDS] (state, payload) {
     state.feeds = payload
   },
+  [MutationTypes.SET_BROWSING_HOME_UESR_ID] (state, payload) {
+    state.browsingHomeUserId = payload
+  },
   [MutationTypes.SET_BROWSING_USER_PROFILE] (state, payload) {
     state.browsingUserProfile = payload
   },
