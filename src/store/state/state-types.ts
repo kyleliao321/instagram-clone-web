@@ -3,6 +3,7 @@ import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/util
 
 export type State = {
     http: Client;
+    authToken: string|undefined;
     loginUserId: string|undefined;
     loginUserProfile: UserProfileDomainModel|undefined;
     feeds: FeedDomainModel[];

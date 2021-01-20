@@ -9,6 +9,7 @@ export const actions: ActionTree<State, State> & Actions = {
     const loginPayload = await context.state.http.login({ ...param })
     if (loginPayload !== undefined) {
       const userProfile = await context.state.http.getUserProfile({ userId: loginPayload.credential.userId })
+      context.commit(MutationTypes.SET_AUTH_TOKEN, loginPayload.credential.jwt)
       context.commit(MutationTypes.SET_LOGIN_USER_ID, loginPayload.credential.userId)
       context.commit(MutationTypes.SET_LOGIN_USER_PROFILE, userProfile)
       return loginPayload.credential.userId

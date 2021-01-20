@@ -3,6 +3,9 @@ import { State } from '../state'
 import { Mutations, MutationTypes } from './mutation-types'
 
 export const mutations: MutationTree<State> & Mutations = {
+  [MutationTypes.SET_AUTH_TOKEN] (state, payload) {
+    state.authToken = payload
+  },
   [MutationTypes.SET_LOGIN_USER_ID] (state, payload) {
     state.loginUserId = payload
   },

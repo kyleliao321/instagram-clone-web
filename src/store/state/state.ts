@@ -3,6 +3,7 @@ import { State } from './state-types'
 
 export const state: State = {
   http: new HttpClientV1(),
+  authToken: undefined,
   loginUserId: undefined,
   loginUserProfile: undefined,
   feeds: [],
