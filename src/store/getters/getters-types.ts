@@ -8,7 +8,8 @@ export enum GetterTypes {
     FEEDS = 'FEEDS',
     BROWSING_HOME_USER_ID = 'BROWSING_HOME_USER_ID',
     BROWSING_USER_PROFILE = 'BROWSING_USER_PROFILE',
-    BROWSING_USER_POSTS = 'BROWSING_USER_POSTS'
+    BROWSING_USER_POSTS = 'BROWSING_USER_POSTS',
+    SEARCHED_USER_PROFILE = 'SEARCHED_USER_PROFILE'
 }
 
 export type Getters = {
@@ -19,4 +20,5 @@ export type Getters = {
     [GetterTypes.BROWSING_HOME_USER_ID](state: State): string|undefined;
     [GetterTypes.BROWSING_USER_PROFILE](state: State): UserProfileDomainModel|undefined;
     [GetterTypes.BROWSING_USER_POSTS](state: State): PostDomainModel[];
+    [GetterTypes.SEARCHED_USER_PROFILE](state: State): UserProfileDomainModel[];
 }

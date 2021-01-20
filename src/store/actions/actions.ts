@@ -1,4 +1,4 @@
-import { GetFeedsInput, LikeOrDislikePostInput } from '@/api/types'
+import { GetFeedsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -81,5 +81,11 @@ export const actions: ActionTree<State, State> & Actions = {
       }
       await context.dispatch(ActionTypes.FETCH_FEEDS)
     }
+  },
+
+  async [ActionTypes.SEARCH_USER_PROFILE] (context, param) {
+    const req: SearchUserInput = { ...param }
+    const searched = await context.state.http.searchUserProfiles(req)
+    context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, searched)
   }
 }

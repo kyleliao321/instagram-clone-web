@@ -10,7 +10,8 @@ export enum ActionTypes {
     NAVIGATE_TO_USER_HOME = 'NAVIGATE_TO_USER_HOME',
     FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
     FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS',
-    LIKE_OR_DISLIKE_POST = 'LIKE_OR_DISLIKE_POST'
+    LIKE_OR_DISLIKE_POST = 'LIKE_OR_DISLIKE_POST',
+    SEARCH_USER_PROFILE = 'SEARCH_USER_PROFILE'
 }
 
 export type ActionParam = {
@@ -34,6 +35,9 @@ export type ActionParam = {
     [ActionTypes.LIKE_OR_DISLIKE_POST]: {
         postId: string;
         browsingUserId: string|undefined;
+    };
+    [ActionTypes.SEARCH_USER_PROFILE]: {
+        keyword: string;
     };
 }
 
@@ -81,5 +85,10 @@ export type Actions = {
     [ActionTypes.LIKE_OR_DISLIKE_POST](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]
+    ): Promise<void>;
+
+    [ActionTypes.SEARCH_USER_PROFILE](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.SEARCH_USER_PROFILE]
     ): Promise<void>;
 }

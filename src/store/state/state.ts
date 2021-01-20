@@ -9,5 +9,6 @@ export const state: State = {
   feeds: [],
   browsingHomeUserId: undefined,
   browsingUserProfile: undefined,
-  browsingUserPosts: []
+  browsingUserPosts: [],
+  searchedUserProfile: []
 }
