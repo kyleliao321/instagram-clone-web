@@ -32,7 +32,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { GetterTypes } from './store/types/getters-types'
+import { GetterTypes } from './store/getters/getters-types'
 
 @Component
 export default class App extends Vue {

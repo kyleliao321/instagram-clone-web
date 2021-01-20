@@ -1,6 +1,6 @@
 import { ActionContext } from 'vuex'
-import { Mutations } from './mutation-types'
-import { State } from './state-types'
+import { State } from '../state'
+import { Mutations } from '../mutations'
 
 export enum ActionTypes {
     LOGIN = 'LOGIN',

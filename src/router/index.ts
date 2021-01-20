@@ -5,7 +5,7 @@ import Feeds from '../views/Feeds/Feeds.vue'
 import Home from '../views/Home/Home.vue'
 import Register from '../views/Register/Register.vue'
 import Login from '../views/Login/Login.vue'
-import { GetterTypes } from '@/store/types/getters-types'
+import { GetterTypes } from '@/store/getters/getters-types'
 
 Vue.use(VueRouter)
 

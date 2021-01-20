@@ -1,41 +1,11 @@
 import Vue from 'vue'
-import Vuex, { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { Actions, ActionTypes } from './types/action-types'
-import { Getters, GetterTypes } from './types/getters-types'
-import { Mutations, MutationTypes } from './types/mutation-types'
-import { State } from './types/state-types'
+import Vuex, { Store as VuexStore, CommitOptions, DispatchOptions } from 'vuex'
+import { state, State } from './state'
+import { getters, Getters } from './getters'
+import { actions, Actions } from './actions'
+import { mutations, Mutations } from './mutations'
 
 Vue.use(Vuex)
-
-const state: State = {
-  loginUserId: undefined
-}
-
-const getters: GetterTree<State, State> & Getters = {
-  [GetterTypes.IS_LOGIN] (state) {
-    return state.loginUserId !== undefined
-  }
-}
-
-const mutations: MutationTree<State> & Mutations = {
-  [MutationTypes.SET_LOGIN_USER_ID] (state, payload) {
-    state.loginUserId = payload
-  }
-}
-
-const actions: ActionTree<State, State> & Actions = {
-  async [ActionTypes.LOGIN] (context, param) {
-    setTimeout(() => {
-      context.commit(MutationTypes.SET_LOGIN_USER_ID, param.userName + param.userName)
-    }, 1000)
-  },
-  async [ActionTypes.REGISTER] (context, param) {
-    setTimeout(() => {
-      // make an api call
-    }, 1000)
-    return true
-  }
-}
 
 export default new Vuex.Store({
   state,
@@ -45,3 +15,24 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+export type Store = Omit<
+  VuexStore<State>,
+  'getters' | 'commit' | 'dispatch'
+> & {
+  commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
+    key: K,
+    payload: P,
+    options?: CommitOptions
+  ): ReturnType<Mutations[K]>;
+} & {
+  dispatch<K extends keyof Actions>(
+    key: K,
+    payload: Parameters<Actions[K]>[1],
+    options?: DispatchOptions
+  ): ReturnType<Actions[K]>;
+} & {
+  getters: {
+    [K in keyof Getters]: ReturnType<Getters[K]>
+  };
+}

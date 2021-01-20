@@ -1,4 +1,4 @@
-import { State } from './state-types'
+import { State } from '../state'
 
 export enum GetterTypes {
     IS_LOGIN = 'IS_LOGIN'

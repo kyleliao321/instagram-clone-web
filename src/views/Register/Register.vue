@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { ActionParam, ActionTypes } from '@/store/types/action-types'
+import { ActionParam, ActionTypes } from '@/store/actions/action-types'
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import { isStringEmpty } from '../../utils/helpers'

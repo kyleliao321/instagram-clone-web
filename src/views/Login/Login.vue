@@ -37,8 +37,8 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { isStringEmpty } from '../../utils/helpers'
 import { Action, Getter } from 'vuex-class'
-import { ActionParam, ActionTypes } from '@/store/types/action-types'
-import { GetterTypes } from '@/store/types/getters-types'
+import { ActionParam, ActionTypes } from '@/store/actions/action-types'
+import { GetterTypes } from '@/store/getters/getters-types'
 
 @Component
 export default class Register extends Vue {
