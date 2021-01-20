@@ -77,3 +77,11 @@ export type LikeOrDislikePostInput = {
     postId: string;
     authToken: string;
 }
+
+export type SearchUserInput = {
+    keyword: string;
+}
+
+export type SearchUserResponse = {
+    users: UserProfileObject[];
+}

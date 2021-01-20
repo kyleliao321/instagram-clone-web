@@ -1,5 +1,5 @@
 import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
-import { FeedObject, GetUserProfileResponse, PostObject } from './types'
+import { FeedObject, GetUserProfileResponse, PostObject, SearchUserResponse } from './types'
 
 export function transformUserProfileResponse (data: GetUserProfileResponse): UserProfileDomainModel {
   const user = data.user
@@ -12,6 +12,22 @@ export function transformUserProfileResponse (data: GetUserProfileResponse): Use
     getPostNum: () => user.postNum,
     getFollowerNum: () => user.followerNum,
     getFollowingNum: () => user.followingNum
+  })
+}
+
+export function transformSearchUserResponse (data: SearchUserResponse): UserProfileDomainModel[] {
+  const users = data.users
+  return users.map(user => {
+    return Object.freeze({
+      getUserId: () => user.id,
+      getUserName: () => user.userName,
+      getAlias: () => user.alias,
+      getDescription: () => user.description,
+      getUserImageSrc: () => user.imageSrc ?? null,
+      getPostNum: () => user.postNum,
+      getFollowerNum: () => user.followerNum,
+      getFollowingNum: () => user.followingNum
+    })
   })
 }
 

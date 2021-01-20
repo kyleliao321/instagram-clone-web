@@ -1,8 +1,8 @@
 import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
 import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
-import { transformFeedResponse, transformPostResponse, transformUserProfileResponse } from './Transformers'
-import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput } from './types'
+import { transformFeedResponse, transformPostResponse, transformSearchUserResponse, transformUserProfileResponse } from './Transformers'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput, SearchUserInput } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -115,6 +115,18 @@ export default class HttpClientV1 extends Client {
           throw new Error('Network Error')
         }
       }
+    }
+
+    public async searchUserProfiles (input: SearchUserInput): Promise<UserProfileDomainModel[]> {
+      const res = await this.server.get('/api/v1/users/', {
+        params: { userName: input.keyword }
+      })
+
+      if (res.status === 200) {
+        return transformSearchUserResponse(res.data)
+      }
+
+      throw new Error('Network Error')
     }
 
     private async getLikedUserIds (postId: string): Promise<string[]> {
