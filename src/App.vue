@@ -32,10 +32,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
+import { GetterTypes } from './store/types/getters-types'
 
 @Component
 export default class App extends Vue {
-  @Getter('isLogin') private isLogin !: boolean;
+  @Getter(GetterTypes.IS_LOGIN) private isLogin !: boolean;
 
   get loginUserImageSrc (): string {
     return 'https://cdn.vuetifyjs.com/images/john.jpg'
