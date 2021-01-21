@@ -47,7 +47,6 @@ export const actions: ActionTree<State, State> & Actions = {
   async [ActionTypes.FETCH_BROWSING_USER_PROFILE] (context, param) {
     const userProfile = await context.state.http.getUserProfile({ ...param })
     if (userProfile !== undefined) {
-      console.log(userProfile)
       context.commit(MutationTypes.SET_BROWSING_USER_PROFILE, userProfile)
       return true
     }

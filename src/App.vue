@@ -11,7 +11,6 @@
 
       <v-spacer></v-spacer>
         <ig-user-search-field
-          v-show="currentRouteName !== 'Home'"
           :searchedUserProfiles="searchedUsers"
           @onSearchedUserClick="onSearchedUserClick"
           @onKeywordUpdate="onKeywordUpdate"/>
@@ -89,6 +88,8 @@ export default class App extends Vue {
 
   private async onOptionClicked (optionName: string) {
     if (optionName === 'Profile') {
+      // update the browsing home id
+      this.navigateToUserHome({ userId: this.loginUserId })
       this.navigateToHome()
     } else if (optionName === 'Logout') {
       await this.logout()

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import UserProfile from './UserProfile.vue'
 import Posts from './Posts.vue'
 import { PostDomainModel, UserProfileDomainModel } from '../../utils/types/DomainModels'
@@ -85,6 +85,16 @@ export default class Home extends Vue {
         browsingUserId: this.browsingHomeUserId
       }
       await this.likeOrDislikePost(param)
+    }
+  }
+
+  @Watch('browsingHomeUserId')
+  private onBrowsingHomeUserIdUpdate () {
+    if (this.browsingHomeUserId !== undefined) {
+      this.fetchBrowsingUserProfile({ userId: this.browsingHomeUserId })
+      this.fetchBrowsingPosts({ userId: this.browsingHomeUserId })
+    } else {
+      throw new Error('Browsing Home User Id is undefined')
     }
   }
 
