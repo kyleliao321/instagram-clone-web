@@ -1,5 +1,5 @@
 import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
-import { FeedObject, GetUserProfileResponse, PostObject, SearchUserResponse } from './types'
+import { FeedObject, GetFollowersResponse, GetFollowingsResponse, GetUserProfileResponse, PostObject, SearchUserResponse } from './types'
 
 export function transformUserProfileResponse (data: GetUserProfileResponse): UserProfileDomainModel {
   const user = data.user
@@ -55,5 +55,35 @@ export function transformFeedResponse (feed: FeedObject, likedUserIds: string[],
     getPostImageSrc: () => `http://localhost:8080/static/${feed.postImage}`,
     getPostLikedNum: () => likedUserIds.length,
     getUserLikedPost: () => likedUserIds.includes(loginUserId)
+  })
+}
+
+export function transformFollowersResponse (res: GetFollowersResponse): UserProfileDomainModel[] {
+  return res.followers.map((user) => {
+    return Object.freeze({
+      getUserId: () => user.id,
+      getUserName: () => user.userName,
+      getAlias: () => user.alias,
+      getDescription: () => user.description,
+      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+      getPostNum: () => user.postNum,
+      getFollowerNum: () => user.followerNum,
+      getFollowingNum: () => user.followingNum
+    })
+  })
+}
+
+export function transformFollowingssResponse (res: GetFollowingsResponse): UserProfileDomainModel[] {
+  return res.followings.map((user) => {
+    return Object.freeze({
+      getUserId: () => user.id,
+      getUserName: () => user.userName,
+      getAlias: () => user.alias,
+      getDescription: () => user.description,
+      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+      getPostNum: () => user.postNum,
+      getFollowerNum: () => user.followerNum,
+      getFollowingNum: () => user.followingNum
+    })
   })
 }

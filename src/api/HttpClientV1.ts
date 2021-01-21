@@ -1,8 +1,8 @@
 import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
 import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
-import { transformFeedResponse, transformPostResponse, transformSearchUserResponse, transformUserProfileResponse } from './Transformers'
-import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput, SearchUserInput } from './types'
+import { transformFeedResponse, transformFollowersResponse, transformFollowingssResponse, transformPostResponse, transformSearchUserResponse, transformUserProfileResponse } from './Transformers'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput, SearchUserInput, GetFollowersInput, GetFollowingsInput } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -124,6 +124,26 @@ export default class HttpClientV1 extends Client {
 
       if (res.status === 200) {
         return transformSearchUserResponse(res.data)
+      }
+
+      throw new Error('Network Error')
+    }
+
+    public async getFollowers (input: GetFollowersInput): Promise<UserProfileDomainModel[]> {
+      const res = await this.server.get(`/api/v1/relations/followers/${input.userId}`)
+
+      if (res.status === 200) {
+        return transformFollowersResponse(res.data)
+      }
+
+      throw new Error('Network Error')
+    }
+
+    public async getFollowings (input: GetFollowingsInput): Promise<UserProfileDomainModel[]> {
+      const res = await this.server.get(`/api/v1/relations/followings/${input.userId}`)
+
+      if (res.status === 200) {
+        return transformFollowingssResponse(res.data)
       }
 
       throw new Error('Network Error')

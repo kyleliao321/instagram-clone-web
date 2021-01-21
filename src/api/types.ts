@@ -85,3 +85,19 @@ export type SearchUserInput = {
 export type SearchUserResponse = {
     users: UserProfileObject[];
 }
+
+export type GetFollowersInput = {
+    userId: string;
+}
+
+export type GetFollowingsInput = {
+    userId: string;
+}
+
+export type GetFollowersResponse = {
+    followers: UserProfileObject[];
+}
+
+export type GetFollowingsResponse = {
+    followings: UserProfileObject[];
+}
