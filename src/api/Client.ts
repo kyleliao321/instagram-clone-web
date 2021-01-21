@@ -1,5 +1,5 @@
 import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/utils/types/DomainModels'
-import { GetFeedsInput, GetFollowersInput, GetFollowingsInput, GetPostsInput, GetUserProfileInput, LikeOrDislikePostInput, LoginInput, LoginResponse, RegisterInput, SearchUserInput } from './types'
+import { CancelFollowInput, FollowInput, GetFeedsInput, GetFollowersInput, GetFollowingsInput, GetPostsInput, GetUserProfileInput, LikeOrDislikePostInput, LoginInput, LoginResponse, RegisterInput, SearchUserInput } from './types'
 
 export default abstract class Client {
     public abstract login(input: LoginInput): Promise<LoginResponse|undefined>
@@ -11,4 +11,6 @@ export default abstract class Client {
     public abstract searchUserProfiles(input: SearchUserInput): Promise<UserProfileDomainModel[]>
     public abstract getFollowers(input: GetFollowersInput): Promise<UserProfileDomainModel[]>
     public abstract getFollowings(input: GetFollowingsInput): Promise<UserProfileDomainModel[]>
+    public abstract follow(input: FollowInput): Promise<UserProfileDomainModel[]>;
+    public abstract cancelFollow(input: CancelFollowInput): Promise<UserProfileDomainModel[]>;
 }

@@ -2,7 +2,7 @@ import { FeedDomainModel, PostDomainModel, UserProfileDomainModel } from '@/util
 import axios, { AxiosInstance } from 'axios'
 import Client from './Client'
 import { transformFeedResponse, transformFollowersResponse, transformFollowingssResponse, transformPostResponse, transformSearchUserResponse, transformUserProfileResponse } from './Transformers'
-import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput, SearchUserInput, GetFollowersInput, GetFollowingsInput } from './types'
+import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse, LoginInput, LoginResponse, RegisterInput, UserProfileObject, GetFeedsInput, LikeOrDislikePostInput, SearchUserInput, GetFollowersInput, GetFollowingsInput, FollowInput, CancelFollowInput } from './types'
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
@@ -141,6 +141,40 @@ export default class HttpClientV1 extends Client {
 
     public async getFollowings (input: GetFollowingsInput): Promise<UserProfileDomainModel[]> {
       const res = await this.server.get(`/api/v1/relations/followings/${input.userId}`)
+
+      if (res.status === 200) {
+        return transformFollowingssResponse(res.data)
+      }
+
+      throw new Error('Network Error')
+    }
+
+    public async follow (input: FollowInput): Promise<UserProfileDomainModel[]> {
+      const res = await this.server.post(
+        '/api/v1/relations/',
+        {
+          followerId: input.followerId,
+          followingId: input.followingId
+        },
+        {
+          headers: { Authorization: `Bearer ${input.authToken}` }
+        }
+      )
+
+      if (res.status === 201) {
+        return transformFollowingssResponse(res.data)
+      }
+
+      throw new Error('Network Error')
+    }
+
+    public async cancelFollow (input: CancelFollowInput): Promise<UserProfileDomainModel[]> {
+      const res = await this.server.delete(
+          `/api/v1/relations/follower/${input.followerId}/following/${input.followingId}`,
+          {
+            headers: { Authorization: `Bearer ${input.authToken}` }
+          }
+      )
 
       if (res.status === 200) {
         return transformFollowingssResponse(res.data)

@@ -101,3 +101,23 @@ export type GetFollowersResponse = {
 export type GetFollowingsResponse = {
     followings: UserProfileObject[];
 }
+
+export type FollowInput = {
+    followerId: string;
+    followingId: string;
+    authToken: string;
+}
+
+export type CancelFollowInput = {
+    followerId: string;
+    followingId: string;
+    authToken: string;
+}
+
+export type FollowResponse = {
+    followings: UserProfileObject[];
+}
+
+export type CancelFollowResponse = {
+    followings: UserProfileObject[];
+}

@@ -35,6 +35,9 @@ export default class Home extends Vue {
   @Action(ActionTypes.FETCH_BROWSING_USER_POSTS) private fetchBrowsingPosts !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]) => Promise<boolean>
   @Action(ActionTypes.LIKE_OR_DISLIKE_POST) private likeOrDislikePost !: (param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]) => Promise<void>
   @Action(ActionTypes.FETCH_LOGIN_USER_FOLLOWINGS) private fetchLoginUserFollowings !: () => Promise<void>;
+  @Action(ActionTypes.FOLLOW) private follow !: (param: ActionParam[ActionTypes.FOLLOW]) => Promise<void>;
+  @Action(ActionTypes.CANCEL_FOLLOW) private cancelFollow !: (param: ActionParam[ActionTypes.CANCEL_FOLLOW]) => Promise<void>;
+
   @Getter(GetterTypes.BROWSING_HOME_USER_ID) private browsingHomeUserId !: string|undefined;
   @Getter(GetterTypes.BROWSING_USER_PROFILE) private browsingUserProfile !: UserProfileDomainModel|undefined;
   @Getter(GetterTypes.BROWSING_USER_POSTS) private posts !: PostDomainModel[];
@@ -60,12 +63,16 @@ export default class Home extends Vue {
   }
 
   private onFollowActionClick () {
+    if (this.browsingHomeUserId === undefined) {
+      return
+    }
+
     if (this.stateWithBrowsingUser === RelationState.FOLLOWING) {
-      // unfollow the user
-      console.log(`unfollow ${this.browsingHomeUserId}`)
+      const param = { followingId: this.browsingHomeUserId }
+      this.cancelFollow(param)
     } else if (this.stateWithBrowsingUser === RelationState.UNFOLLOWING) {
-      // follow the user
-      console.log(`follow ${this.browsingHomeUserId}`)
+      const param = { followingId: this.browsingHomeUserId }
+      this.follow(param)
     }
   }
 

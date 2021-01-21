@@ -1,4 +1,4 @@
-import { GetFeedsInput, GetFollowingsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
+import { CancelFollowInput, FollowInput, GetFeedsInput, GetFollowingsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -103,6 +103,36 @@ export const actions: ActionTree<State, State> & Actions = {
         userId: context.state.loginUserId
       }
       const followings = await context.state.http.getFollowings(req)
+      context.commit(MutationTypes.SET_LOGIN_USER_FOLLOWINGS, followings)
+      return
+    }
+
+    throw new Error('Illegal State')
+  },
+
+  async [ActionTypes.FOLLOW] (context, param) {
+    if (context.state.loginUserId !== undefined && context.state.authToken !== undefined) {
+      const req: FollowInput = {
+        followerId: context.state.loginUserId,
+        followingId: param.followingId,
+        authToken: context.state.authToken
+      }
+      const followings = await context.state.http.follow(req)
+      context.commit(MutationTypes.SET_LOGIN_USER_FOLLOWINGS, followings)
+      return
+    }
+
+    throw new Error('Illegal State')
+  },
+
+  async [ActionTypes.CANCEL_FOLLOW] (context, param) {
+    if (context.state.loginUserId !== undefined && context.state.authToken !== undefined) {
+      const req: CancelFollowInput = {
+        followerId: context.state.loginUserId,
+        followingId: param.followingId,
+        authToken: context.state.authToken
+      }
+      const followings = await context.state.http.cancelFollow(req)
       context.commit(MutationTypes.SET_LOGIN_USER_FOLLOWINGS, followings)
       return
     }
