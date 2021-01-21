@@ -62,17 +62,19 @@ export default class Home extends Vue {
     }
   }
 
-  private onFollowActionClick () {
+  private async onFollowActionClick () {
     if (this.browsingHomeUserId === undefined) {
       return
     }
 
     if (this.stateWithBrowsingUser === RelationState.FOLLOWING) {
       const param = { followingId: this.browsingHomeUserId }
-      this.cancelFollow(param)
+      await this.cancelFollow(param)
+      await this.fetchBrowsingUserProfile({ userId: this.browsingHomeUserId })
     } else if (this.stateWithBrowsingUser === RelationState.UNFOLLOWING) {
       const param = { followingId: this.browsingHomeUserId }
-      this.follow(param)
+      await this.follow(param)
+      await this.fetchBrowsingUserProfile({ userId: this.browsingHomeUserId })
     }
   }
 
