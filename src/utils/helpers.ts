@@ -20,3 +20,9 @@ export function formatDate (isoDateString: string): string {
 
   return `${year}/${month}/${day} ${hour}:${min}`
 }
+
+export enum RelationState {
+  FOLLOWING,
+  UNFOLLOWING,
+  SELF
+}

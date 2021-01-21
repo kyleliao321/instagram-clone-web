@@ -32,8 +32,12 @@ export const mutations: MutationTree<State> & Mutations = {
     state.browsingHomeUserId = undefined
     state.browsingUserProfile = undefined
     state.browsingUserPosts = []
+    state.loginUserFollowings = []
   },
   [MutationTypes.SET_SEARCH_USER_PROFILE] (state, payload) {
     state.searchedUserProfile = payload
+  },
+  [MutationTypes.SET_LOGIN_USER_FOLLOWINGS] (state, payload) {
+    state.loginUserFollowings = payload
   }
 }

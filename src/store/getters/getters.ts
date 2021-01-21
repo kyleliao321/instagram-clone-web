@@ -26,5 +26,8 @@ export const getters: GetterTree<State, State> & Getters = {
   },
   [GetterTypes.SEARCHED_USER_PROFILE] (state) {
     return state.searchedUserProfile
+  },
+  [GetterTypes.LOGIN_USER_FOLLOWINGS] (state) {
+    return state.loginUserFollowings
   }
 }

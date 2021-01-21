@@ -10,7 +10,8 @@ export enum MutationTypes {
     SET_BROWSING_USER_PROFILE = 'SET_BROWSING_USER_PROFILE',
     SET_BROWSING_USER_POSTS = 'SET_BROWSING_USER_POSTS',
     RESET_ALL = 'RESET_ALL',
-    SET_SEARCH_USER_PROFILE = 'SET_SEARCH_USER_PROFILE'
+    SET_SEARCH_USER_PROFILE = 'SET_SEARCH_USER_PROFILE',
+    SET_LOGIN_USER_FOLLOWINGS = 'SET_LOGIN_USER_FOLLOWINGS'
 }
 
 export type Mutations<S = State> = {
@@ -23,4 +24,5 @@ export type Mutations<S = State> = {
     [MutationTypes.SET_BROWSING_USER_POSTS](state: S, payload: PostDomainModel[]): void;
     [MutationTypes.RESET_ALL](state: S): void;
     [MutationTypes.SET_SEARCH_USER_PROFILE](state: S, payload: UserProfileDomainModel[]): void;
+    [MutationTypes.SET_LOGIN_USER_FOLLOWINGS](state: S, payload: UserProfileDomainModel[]): void;
 }

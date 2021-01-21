@@ -5,7 +5,16 @@
                 <ig-avatar :imageSrc="userImageSrc" size="120" />
             </div>
             <div class="user-metadata-container">
-                <h2>{{ userName }}</h2>
+                <div style="display: flex;">
+                  <h2>{{ userName }}</h2>
+                  <v-btn
+                    v-if="showActionButton"
+                    style="margin-left: 15px; "
+                    outlined
+                    :color="actionButtonColor"
+                    @click="onFollowActionClick"
+                    >{{ actionButtonName }}</v-btn>
+                </div>
                 <div class="number-container">
                     <h4 style="margin-right: 25px;">{{ postsNum }} posts</h4>
                     <h4 style="margin-right: 25px;">{{ followerNum }} followers</h4>
@@ -21,12 +30,37 @@
 </template>
 
 <script lang="ts">
+import { RelationState } from '@/utils/helpers'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { UserProfileDomainModel } from '../../utils/types/DomainModels'
 
 @Component
 export default class UserProifle extends Vue {
+  @Prop() private relationStateWithUser !: RelationState|undefined;
   @Prop() private browsingUserProfile !: UserProfileDomainModel;
+
+  get showActionButton (): boolean {
+    if (this.relationStateWithUser === undefined || this.relationStateWithUser === RelationState.SELF) {
+      return false
+    }
+    return true
+  }
+
+  get actionButtonColor (): string {
+    if (this.relationStateWithUser === RelationState.FOLLOWING) {
+      return 'error'
+    } else {
+      return 'indigo'
+    }
+  }
+
+  get actionButtonName (): string {
+    if (this.relationStateWithUser === RelationState.FOLLOWING) {
+      return 'Cancel'
+    } else {
+      return 'Follow'
+    }
+  }
 
   get userImageSrc (): string|null {
     return this.browsingUserProfile.getUserImageSrc()
@@ -54,6 +88,10 @@ export default class UserProifle extends Vue {
 
   get followerNum (): string {
     return `${this.browsingUserProfile.getFollowerNum()}`
+  }
+
+  private onFollowActionClick () {
+    this.$emit('onFollowActionClick')
   }
 }
 </script>

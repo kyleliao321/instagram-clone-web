@@ -1,4 +1,4 @@
-import { GetFeedsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
+import { GetFeedsInput, GetFollowingsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -95,5 +95,18 @@ export const actions: ActionTree<State, State> & Actions = {
 
   async [ActionTypes.CLEAN_UP_SERACHED] (context) {
     context.commit(MutationTypes.SET_SEARCH_USER_PROFILE, [])
+  },
+
+  async [ActionTypes.FETCH_LOGIN_USER_FOLLOWINGS] (context) {
+    if (context.state.loginUserId !== undefined) {
+      const req: GetFollowingsInput = {
+        userId: context.state.loginUserId
+      }
+      const followings = await context.state.http.getFollowings(req)
+      context.commit(MutationTypes.SET_LOGIN_USER_FOLLOWINGS, followings)
+      return
+    }
+
+    throw new Error('Illegal State')
   }
 }

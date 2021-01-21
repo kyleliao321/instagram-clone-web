@@ -4,7 +4,9 @@
           <ig-user-profile
               v-if="browsingUserProfile !== undefined"
               class="user-profile-container"
-              :browsingUserProfile="browsingUserProfile" />
+              :relationStateWithUser="stateWithBrowsingUser"
+              :browsingUserProfile="browsingUserProfile"
+              @onFollowActionClick="onFollowActionClick" />
           <ig-posts
               style="margin-top: 20px; width: 900px;"
               :posts="posts"
@@ -22,6 +24,7 @@ import { PostDomainModel, UserProfileDomainModel } from '../../utils/types/Domai
 import { Action, Getter } from 'vuex-class'
 import { ActionParam, ActionTypes } from '@/store/actions/action-types'
 import { GetterTypes } from '@/store/getters/getters-types'
+import { RelationState } from '@/utils/helpers'
 
 Vue.component('ig-user-profile', UserProfile)
 Vue.component('ig-posts', Posts)
@@ -31,9 +34,40 @@ export default class Home extends Vue {
   @Action(ActionTypes.FETCH_BROWSING_USER_PROFILE) private fetchBrowsingUserProfile !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_PROFILE]) => Promise<boolean>
   @Action(ActionTypes.FETCH_BROWSING_USER_POSTS) private fetchBrowsingPosts !: (param: ActionParam[ActionTypes.FETCH_BROWSING_USER_POSTS]) => Promise<boolean>
   @Action(ActionTypes.LIKE_OR_DISLIKE_POST) private likeOrDislikePost !: (param: ActionParam[ActionTypes.LIKE_OR_DISLIKE_POST]) => Promise<void>
+  @Action(ActionTypes.FETCH_LOGIN_USER_FOLLOWINGS) private fetchLoginUserFollowings !: () => Promise<void>;
   @Getter(GetterTypes.BROWSING_HOME_USER_ID) private browsingHomeUserId !: string|undefined;
   @Getter(GetterTypes.BROWSING_USER_PROFILE) private browsingUserProfile !: UserProfileDomainModel|undefined;
   @Getter(GetterTypes.BROWSING_USER_POSTS) private posts !: PostDomainModel[];
+  @Getter(GetterTypes.LOGIN_USER_FOLLOWINGS) private loginUserFollowings !: UserProfileDomainModel[];
+  @Getter(GetterTypes.LOGIN_USER_ID) private loginUserId !: string|undefined;
+
+  get stateWithBrowsingUser (): RelationState|undefined {
+    const loginUserFollowingIds = this.loginUserFollowings.map((f) => f.getUserId())
+
+    if (this.loginUserId === undefined || this.browsingHomeUserId === undefined) {
+      return undefined
+    }
+
+    if (this.loginUserId === this.browsingHomeUserId) {
+      return RelationState.SELF
+    }
+
+    if (loginUserFollowingIds.includes(this.browsingHomeUserId)) {
+      return RelationState.FOLLOWING
+    } else {
+      return RelationState.UNFOLLOWING
+    }
+  }
+
+  private onFollowActionClick () {
+    if (this.stateWithBrowsingUser === RelationState.FOLLOWING) {
+      // unfollow the user
+      console.log(`unfollow ${this.browsingHomeUserId}`)
+    } else if (this.stateWithBrowsingUser === RelationState.UNFOLLOWING) {
+      // follow the user
+      console.log(`follow ${this.browsingHomeUserId}`)
+    }
+  }
 
   private async onLikeButtonClicked (postId: string) {
     if (this.browsingHomeUserId !== undefined) {
@@ -47,6 +81,7 @@ export default class Home extends Vue {
 
   private created () {
     if (this.browsingHomeUserId !== undefined) {
+      this.fetchLoginUserFollowings()
       this.fetchBrowsingUserProfile({ userId: this.browsingHomeUserId })
       this.fetchBrowsingPosts({ userId: this.browsingHomeUserId })
     } else {

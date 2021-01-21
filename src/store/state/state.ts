@@ -10,5 +10,6 @@ export const state: State = {
   browsingHomeUserId: undefined,
   browsingUserProfile: undefined,
   browsingUserPosts: [],
-  searchedUserProfile: []
+  searchedUserProfile: [],
+  loginUserFollowings: []
 }

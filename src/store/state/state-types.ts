@@ -11,4 +11,5 @@ export type State = {
     browsingUserProfile: UserProfileDomainModel|undefined;
     browsingUserPosts: PostDomainModel[];
     searchedUserProfile: UserProfileDomainModel[];
+    loginUserFollowings: UserProfileDomainModel[];
 }
