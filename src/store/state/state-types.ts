@@ -10,6 +10,8 @@ export type State = {
     browsingHomeUserId: string|undefined;
     browsingUserProfile: UserProfileDomainModel|undefined;
     browsingUserPosts: PostDomainModel[];
+    browsingUserFollowers: UserProfileDomainModel[];
+    browsingUserFollowings: UserProfileDomainModel[];
     searchedUserProfile: UserProfileDomainModel[];
     loginUserFollowings: UserProfileDomainModel[];
 }

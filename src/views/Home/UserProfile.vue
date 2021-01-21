@@ -17,8 +17,16 @@
                 </div>
                 <div class="number-container">
                     <h4 style="margin-right: 25px;">{{ postsNum }} posts</h4>
-                    <h4 style="margin-right: 25px;">{{ followerNum }} followers</h4>
-                    <h4>{{ followingNum }} followings</h4>
+                    <ig-user-list-dialog
+                      @onUserListClickOnUser="onUserListClickOnUser"
+                      :buttonName="followerNum"
+                      subHeader="FOLLOWERS"
+                      :users="browsingUserFollowers" />
+                    <ig-user-list-dialog
+                      @onUserListClickOnUser="onUserListClickOnUser"
+                      :buttonName="followingNum"
+                      subHeader="FOLLOWINGS"
+                      :users="browsingUserFollowings" />
                 </div>
                 <h3>{{ userAlias }}</h3>
             </div>
@@ -30,14 +38,19 @@
 </template>
 
 <script lang="ts">
+import UserListDialog from './UserListDialog.vue'
 import { RelationState } from '@/utils/helpers'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { UserProfileDomainModel } from '../../utils/types/DomainModels'
+
+Vue.component('ig-user-list-dialog', UserListDialog)
 
 @Component
 export default class UserProifle extends Vue {
   @Prop() private relationStateWithUser !: RelationState|undefined;
   @Prop() private browsingUserProfile !: UserProfileDomainModel;
+  @Prop() private browsingUserFollowers !: UserProfileDomainModel[];
+  @Prop() private browsingUserFollowings !: UserProfileDomainModel[];
 
   get showActionButton (): boolean {
     if (this.relationStateWithUser === undefined || this.relationStateWithUser === RelationState.SELF) {
@@ -83,11 +96,15 @@ export default class UserProifle extends Vue {
   }
 
   get followingNum (): string {
-    return `${this.browsingUserProfile.getFollowingNum()}`
+    return `${this.browsingUserProfile.getFollowingNum()}  followings`
   }
 
   get followerNum (): string {
-    return `${this.browsingUserProfile.getFollowerNum()}`
+    return `${this.browsingUserProfile.getFollowerNum()}  followers`
+  }
+
+  private onUserListClickOnUser (user: UserProfileDomainModel) {
+    this.$emit('onUserListClickOnUser', user)
   }
 
   private onFollowActionClick () {

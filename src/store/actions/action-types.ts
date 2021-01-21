@@ -10,12 +10,14 @@ export enum ActionTypes {
     NAVIGATE_TO_USER_HOME = 'NAVIGATE_TO_USER_HOME',
     FETCH_BROWSING_USER_PROFILE = 'FETCH_BROWSING_USER_PROFILE',
     FETCH_BROWSING_USER_POSTS = 'FETCH_BROWSING_USER_POSTS',
+    FETCH_BROWSING_USER_FOLLOWERS = 'FETCH_BROWSING_USER_FOLLOWERS',
+    FETCH_BROWSING_USER_FOLLOWINGS = 'FETCH_BROWSING_USER_FOLLOWINGS',
     LIKE_OR_DISLIKE_POST = 'LIKE_OR_DISLIKE_POST',
     SEARCH_USER_PROFILE = 'SEARCH_USER_PROFILE',
     CLEAN_UP_SERACHED = 'CLEAN_UP_SERACHED',
     FETCH_LOGIN_USER_FOLLOWINGS = 'FETCH_LOGIN_USER_FOLLOWINGS',
     FOLLOW = 'FOLLOW',
-    CANCEL_FOLLOW = 'CANCEL_FOLLOW'
+    CANCEL_FOLLOW = 'CANCEL_FOLLOW',
 }
 
 export type ActionParam = {
@@ -48,6 +50,12 @@ export type ActionParam = {
     };
     [ActionTypes.CANCEL_FOLLOW]: {
         followingId: string;
+    };
+    [ActionTypes.FETCH_BROWSING_USER_FOLLOWERS]: {
+        userId: string;
+    };
+    [ActionTypes.FETCH_BROWSING_USER_FOLLOWINGS]: {
+        userId: string;
     };
 }
 
@@ -118,5 +126,15 @@ export type Actions = {
     [ActionTypes.CANCEL_FOLLOW](
         context: AugmentedActionContext,
         param: ActionParam[ActionTypes.CANCEL_FOLLOW]
+    ): Promise<void>;
+
+    [ActionTypes.FETCH_BROWSING_USER_FOLLOWERS](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.FETCH_BROWSING_USER_FOLLOWERS]
+    ): Promise<void>;
+
+    [ActionTypes.FETCH_BROWSING_USER_FOLLOWINGS](
+        context: AugmentedActionContext,
+        param: ActionParam[ActionTypes.FETCH_BROWSING_USER_FOLLOWINGS]
     ): Promise<void>;
 }

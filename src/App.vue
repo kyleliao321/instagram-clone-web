@@ -29,6 +29,7 @@
     </v-app-bar>
     <v-main style="padding-top: 75px;">
       <router-view
+        @onUserListClickOnUser="onSearchedUserClick"
         @onNavigate="onNavigate"
       ></router-view>
     </v-main>

@@ -1,4 +1,4 @@
-import { CancelFollowInput, FollowInput, GetFeedsInput, GetFollowingsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
+import { CancelFollowInput, FollowInput, GetFeedsInput, GetFollowersInput, GetFollowingsInput, LikeOrDislikePostInput, SearchUserInput } from '@/api/types'
 import { ActionTree } from 'vuex'
 import { MutationTypes } from '../mutations/mutation-types'
 import { State } from '../state'
@@ -137,5 +137,21 @@ export const actions: ActionTree<State, State> & Actions = {
     }
 
     throw new Error('Illegal State')
+  },
+
+  async [ActionTypes.FETCH_BROWSING_USER_FOLLOWERS] (context, param) {
+    const req: GetFollowersInput = {
+      userId: param.userId
+    }
+    const followers = await context.state.http.getFollowers(req)
+    context.commit(MutationTypes.SET_BROWSING_USER_FOLLOWERS, followers)
+  },
+
+  async [ActionTypes.FETCH_BROWSING_USER_FOLLOWINGS] (context, param) {
+    const req: GetFollowingsInput = {
+      userId: param.userId
+    }
+    const followings = await context.state.http.getFollowings(req)
+    context.commit(MutationTypes.SET_BROWSING_USER_FOLLOWINGS, followings)
   }
 }
