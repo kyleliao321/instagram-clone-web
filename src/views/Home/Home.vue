@@ -111,8 +111,6 @@ export default class Home extends Vue {
       this.fetchBrowsingUserFollowers({ userId: this.browsingHomeUserId })
       this.fetchBrowsingUserFollowings({ userId: this.browsingHomeUserId })
       this.fetchBrowsingPosts({ userId: this.browsingHomeUserId })
-    } else {
-      throw new Error('Browsing Home User Id is undefined')
     }
   }
 
@@ -122,8 +120,6 @@ export default class Home extends Vue {
       await this.fetchBrowsingUserFollowers({ userId: this.browsingHomeUserId })
       await this.fetchBrowsingUserFollowings({ userId: this.browsingHomeUserId })
       await this.fetchBrowsingPosts({ userId: this.browsingHomeUserId })
-    } else {
-      throw new Error('Browsing Home User Id is undefined')
     }
   }
 }
