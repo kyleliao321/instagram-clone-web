@@ -1,13 +1,13 @@
-FROM node:15.5.1-alpine3.10 AS build
-
-RUN npm install -g http-server
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app
+# build stage
+FROM node:15.5.1-alpine3.10 as build-stage
+WORKDIR /app
 COPY package*.json ./
-USER node
-RUN npm ci
-COPY --chown=node:node . .
+RUN npm install
+COPY . .
 RUN npm run build
 
-EXPOSE 6006
-CMD [ "http-server", "dist" ]
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
