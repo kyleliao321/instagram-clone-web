@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ig-clone-web
+    ports:
+      - "6006:6006"
+    env_file: .env.local
