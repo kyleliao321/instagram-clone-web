@@ -8,7 +8,7 @@ export function transformUserProfileResponse (data: GetUserProfileResponse): Use
     getUserName: () => user.userName,
     getAlias: () => user.alias,
     getDescription: () => user.description,
-    getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+    getUserImageSrc: () => user.imageSrc === null ? null : `${process.env.VUE_APP_API_URL}/static/${user.imageSrc}`,
     getPostNum: () => user.postNum,
     getFollowerNum: () => user.followerNum,
     getFollowingNum: () => user.followingNum
@@ -23,7 +23,7 @@ export function transformSearchUserResponse (data: SearchUserResponse): UserProf
       getUserName: () => user.userName,
       getAlias: () => user.alias,
       getDescription: () => user.description,
-      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+      getUserImageSrc: () => user.imageSrc === null ? null : `${process.env.VUE_APP_API_URL}/static/${user.imageSrc}`,
       getPostNum: () => user.postNum,
       getFollowerNum: () => user.followerNum,
       getFollowingNum: () => user.followingNum
@@ -38,7 +38,7 @@ export function transformPostResponse (post: PostObject, likedUserIds: string[],
     getPostLocation: () => post.location,
     getPostDate: () => post.timestamp,
     getPostUseId: () => post.postedUserid,
-    getPostImageSrc: () => `http://localhost:8080/static/${post.imageSrc}`,
+    getPostImageSrc: () => `${process.env.VUE_APP_API_URL}/static/${post.imageSrc}`,
     getPostLikedNum: () => likedUserIds.length,
     getUserLikedPost: () => likedUserIds.includes(loginUserId)
   })
@@ -48,11 +48,11 @@ export function transformFeedResponse (feed: FeedObject, likedUserIds: string[],
   return Object.freeze({
     getUserId: () => feed.userId,
     getUserName: () => feed.userName,
-    getUserImageSrc: () => feed.userImage === null ? null : `http://localhost:8080/static/${feed.userImage}`,
+    getUserImageSrc: () => feed.userImage === null ? null : `${process.env.VUE_APP_API_URL}/static/${feed.userImage}`,
     getPostId: () => feed.postId,
     getPostDescription: () => feed.description,
     getPostLocation: () => feed.location,
-    getPostImageSrc: () => `http://localhost:8080/static/${feed.postImage}`,
+    getPostImageSrc: () => `${process.env.VUE_APP_API_URL}/static/${feed.postImage}`,
     getPostLikedNum: () => likedUserIds.length,
     getUserLikedPost: () => likedUserIds.includes(loginUserId)
   })
@@ -65,7 +65,7 @@ export function transformFollowersResponse (res: GetFollowersResponse): UserProf
       getUserName: () => user.userName,
       getAlias: () => user.alias,
       getDescription: () => user.description,
-      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+      getUserImageSrc: () => user.imageSrc === null ? null : `${process.env.VUE_APP_API_URL}/static/${user.imageSrc}`,
       getPostNum: () => user.postNum,
       getFollowerNum: () => user.followerNum,
       getFollowingNum: () => user.followingNum
@@ -80,7 +80,7 @@ export function transformFollowingssResponse (res: GetFollowingsResponse): UserP
       getUserName: () => user.userName,
       getAlias: () => user.alias,
       getDescription: () => user.description,
-      getUserImageSrc: () => user.imageSrc === null ? null : `http://localhost:8080/static/${user.imageSrc}`,
+      getUserImageSrc: () => user.imageSrc === null ? null : `${process.env.VUE_APP_API_URL}/static/${user.imageSrc}`,
       getPostNum: () => user.postNum,
       getFollowerNum: () => user.followerNum,
       getFollowingNum: () => user.followingNum

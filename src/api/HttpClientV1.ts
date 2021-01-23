@@ -6,21 +6,34 @@ import { GetPostsInput, GetUserProfileInput, GetPostsResponse, GetFeedsResponse,
 
 export default class HttpClientV1 extends Client {
     private server: AxiosInstance;
+    private apiKey: string;
 
     constructor () {
       super()
-      this.server = axios.create({ baseURL: 'http://localhost:8080' })
+      const baseUrl = process.env.VUE_APP_API_URL
+      const apiKey = process.env.VUE_APP_X_API_KEY
+
+      if (!baseUrl || !apiKey) {
+        throw new Error('Base URL or API key is not defined in environment variable')
+      }
+
+      this.apiKey = apiKey
+      this.server = axios.create({ baseURL: baseUrl })
     }
 
     public async login (loginInput: LoginInput): Promise<LoginResponse|undefined> {
-      const res = await this.server.post('/api/v1/accounts/login', loginInput)
+      const res = await this.server.post('/api/v1/accounts/login', loginInput, {
+        headers: { 'X-API-KEY': this.apiKey }
+      })
       if (res.status === 200) {
         return res.data
       }
     }
 
     public async register (input: RegisterInput): Promise<boolean> {
-      const res = await this.server.post('/api/v1/accounts/register', input)
+      const res = await this.server.post('/api/v1/accounts/register', input, {
+        headers: { 'X-API-KEY': this.apiKey }
+      })
       if (res.status === 201) {
         return true
       }
@@ -28,7 +41,9 @@ export default class HttpClientV1 extends Client {
     }
 
     public async getUserProfile (input: GetUserProfileInput): Promise<UserProfileDomainModel|undefined> {
-      const res = await this.server.get(`/api/v1/users/${input.userId}`)
+      const res = await this.server.get(`/api/v1/users/${input.userId}`, {
+        headers: { 'X-API-KEY': this.apiKey }
+      })
 
       if (res.status === 200) {
         return transformUserProfileResponse(res.data)
@@ -39,7 +54,8 @@ export default class HttpClientV1 extends Client {
       const res = await this.server.get('/api/v1/posts/', {
         params: {
           userId: input.userId
-        }
+        },
+        headers: { 'X-API-KEY': this.apiKey }
       })
 
       if (res.status === 200) {
@@ -64,7 +80,8 @@ export default class HttpClientV1 extends Client {
         params: {
           userId: input.userId,
           pageSize: '100'
-        }
+        },
+        headers: { 'X-API-KEY': this.apiKey }
       })
 
       if (res.status === 200) {
@@ -91,7 +108,10 @@ export default class HttpClientV1 extends Client {
         const res = await this.server.delete(
           `/api/v1/likes/user/${input.userId}/post/${input.postId}`,
           {
-            headers: { Authorization: `Bearer ${input.authToken}` }
+            headers: {
+              Authorization: `Bearer ${input.authToken}`,
+              'X-API-KEY': this.apiKey
+            }
           }
         )
 
@@ -107,7 +127,10 @@ export default class HttpClientV1 extends Client {
             postId: input.postId
           },
           {
-            headers: { Authorization: `Bearer ${input.authToken}` }
+            headers: {
+              Authorization: `Bearer ${input.authToken}`,
+              'X-API-KEY': this.apiKey
+            }
           }
         )
 
@@ -119,7 +142,8 @@ export default class HttpClientV1 extends Client {
 
     public async searchUserProfiles (input: SearchUserInput): Promise<UserProfileDomainModel[]> {
       const res = await this.server.get('/api/v1/users/', {
-        params: { userName: input.keyword }
+        params: { userName: input.keyword },
+        headers: { 'X-API-KEY': this.apiKey }
       })
 
       if (res.status === 200) {
@@ -130,7 +154,9 @@ export default class HttpClientV1 extends Client {
     }
 
     public async getFollowers (input: GetFollowersInput): Promise<UserProfileDomainModel[]> {
-      const res = await this.server.get(`/api/v1/relations/followers/${input.userId}`)
+      const res = await this.server.get(`/api/v1/relations/followers/${input.userId}`, {
+        headers: { 'X-API-KEY': this.apiKey }
+      })
 
       if (res.status === 200) {
         return transformFollowersResponse(res.data)
@@ -140,7 +166,9 @@ export default class HttpClientV1 extends Client {
     }
 
     public async getFollowings (input: GetFollowingsInput): Promise<UserProfileDomainModel[]> {
-      const res = await this.server.get(`/api/v1/relations/followings/${input.userId}`)
+      const res = await this.server.get(`/api/v1/relations/followings/${input.userId}`, {
+        headers: { 'X-API-KEY': this.apiKey }
+      })
 
       if (res.status === 200) {
         return transformFollowingssResponse(res.data)
@@ -157,7 +185,10 @@ export default class HttpClientV1 extends Client {
           followingId: input.followingId
         },
         {
-          headers: { Authorization: `Bearer ${input.authToken}` }
+          headers: {
+            Authorization: `Bearer ${input.authToken}`,
+            'X-API-KEY': this.apiKey
+          }
         }
       )
 
@@ -172,7 +203,10 @@ export default class HttpClientV1 extends Client {
       const res = await this.server.delete(
           `/api/v1/relations/follower/${input.followerId}/following/${input.followingId}`,
           {
-            headers: { Authorization: `Bearer ${input.authToken}` }
+            headers: {
+              Authorization: `Bearer ${input.authToken}`,
+              'X-API-KEY': this.apiKey
+            }
           }
       )
 
@@ -185,7 +219,8 @@ export default class HttpClientV1 extends Client {
 
     private async getLikedUserIds (postId: string): Promise<string[]> {
       const res = await this.server.get('/api/v1/likes/', {
-        params: { postId }
+        params: { postId },
+        headers: { 'X-API-KEY': this.apiKey }
       })
 
       if (res.status === 200) {
